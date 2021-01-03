@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.9)
-project (geometry)
+project (spout)
 include (../../32blit-beta/32blit.cmake)
-blit_executable (geometry geometry.cpp)
-blit_metadata (geometry metadata.yml)
+blit_executable (spout spout.cpp)
+blit_metadata (spout metadata.yml)
