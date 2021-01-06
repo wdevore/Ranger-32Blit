@@ -15,6 +15,8 @@ Now you can run make to compile.
 
 ```
 > make
+OR
+> make -j4; spout
 ```
 
 # Example CMakeLists.txt(s)

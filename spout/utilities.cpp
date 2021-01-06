@@ -23,3 +23,8 @@ void draw_stats(uint32_t ms_start, uint32_t ms_end)
     std::string fms = std::to_string(ms_end - ms_start);
     screen.text(fms, minimal_font, Rect(3, screen.bounds.h - 9, 10, 16));
 }
+
+float lerp(float min, float max, float t)
+{
+    return min * (1.0 - t) + max * t;
+}
