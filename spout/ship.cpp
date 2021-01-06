@@ -18,6 +18,8 @@ void Ship::init()
     thrustColor = {255, 255, 255};
     bodyColor = {0, 0, 0};
 
+    particleGravity = Vec2{0.0, 0.015};
+
     activator = std::make_unique<ActivatorArc>();
 
     // Set up thrust particles
@@ -90,13 +92,19 @@ void Ship::update(uint32_t time, Vec2 &force)
     activator->setStartAngle(rotation + (DegreeToRadians * 5.0) + (DegreeToRadians * 180.0));
     activator->setEndAngle(rotation - (DegreeToRadians * 5.0) + (DegreeToRadians * 180.0));
 
+    // Check for scrolling
+    if (position.y >= screen.bounds.h / 2 && position.y < screen.bounds.h / 1.8)
+    {
+        std::cout << "scrolling..." << std::endl;
+    }
+
     // Ship explodes if it falls below the bottom.
     if (position.y > screen.bounds.h)
     {
         std::cout << "BOOM!" << std::endl;
     }
 
-    // Prevent from going beyond the left/right walls
+    // Prevent ship from going beyond the left/right walls
     if (position.x >= (screen.bounds.w - BodySize))
     {
         position.x = screen.bounds.w - BodySize - 0.5;
@@ -107,8 +115,8 @@ void Ship::update(uint32_t time, Vec2 &force)
         position.x = BodySize + 0.5;
     }
 
-    ps.setPosition(position.x, position.y);
-    ps.addForce(Vec2(0.0, 0.015));
+    ps.setPosition(float(int(position.x)), float(int(position.y)));
+    ps.addForce(particleGravity);
 
     ps.update(time);
 }

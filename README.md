@@ -1,6 +1,36 @@
+# Ranger-32Blit
 
-Ranger-32Blit
+## Notes
+A buffer 1.5 times larger than the display holds the occupancy data.
 
+```
+
+    .                                        .
+    |                                        |
+    |                                        |
+    |________________________________________|
+    |                                        |
+    |         To be populated  (B)           |        Off Screen
+    |________________________________________|
+    |                                        |        "N" rows
+    |         Ready for screen (A)           |
+    .----------------------------------------.
+    |                                        |
+    |                                        |        Initially this top portion is populated.
+    |                                        |
+    |                                        |
+    |                                        |
+    |________________________________________|        <-- scroll line
+    |                                        |        
+    |                                        |
+    |                                        |
+    |                                        |        On Screen
+    |                                        |
+    |                                        |
+    |                                        |
+    .----------------------------------------.
+```
+Once a (A) begins entering screen (B) is populated
 # Building
 If you want to build a version for the device then specify a toolchain, which in this case is **32blit.toolchain**.
 ```
