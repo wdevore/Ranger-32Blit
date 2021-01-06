@@ -24,10 +24,4 @@ void ActivatorArc::activate(std::unique_ptr<ParticleNode> &particle, Vec2 &cente
     float speed = minSpeed + maxSpeed * drand48();
 
     particle->setVelocity(direction, speed);
-
-    float angularVel = lerp(minAngularVelocity, maxAngularVelocity, drand48());
-    if (drand48() < 0.5)
-        angularVel = -angularVel;
-
-    float upForce = lerp(minForce, maxForce, drand48());
 }
