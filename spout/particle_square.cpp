@@ -21,11 +21,11 @@ void ParticleSquare::update(uint32_t time)
         // Check against display bounds. Bounce particle off wall.
         if (position.y >= screen.bounds.h) {
             position.y = screen.bounds.h-1;
-            velocity.y *= -0.8;
+            velocity.y *= -0.5;
         }
         else if (position.y <= 0) {
             position.y = 1;
-            velocity.y *= -0.8;
+            velocity.y *= -0.5;
         }
 
         if (position.x >= screen.bounds.w) {

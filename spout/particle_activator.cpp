@@ -11,6 +11,7 @@ using namespace blit;
 ParticleActivator::ParticleActivator()
 {
     maxLife = MaxParticleLifetime;
+    minSpeed = MinParticleSpeed;
     maxSpeed = MaxParticleSpeed;
 }
 

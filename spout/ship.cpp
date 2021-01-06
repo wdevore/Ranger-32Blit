@@ -19,11 +19,9 @@ void Ship::init()
     bodyColor = {0, 0, 0};
 
     activator = std::make_unique<ActivatorArc>();
-    // ps.setParticleActivator(std::move(activator));
-    // ps.setParticleActivator(std::make_unique<ActivatorRadial>());
 
     // Set up thrust particles
-    for (size_t i = 0; i < 100; i++)
+    for (size_t i = 0; i < 200; i++)
     {
         ps.addParticle(std::make_unique<ParticleSquare>(i));
     }
@@ -92,11 +90,13 @@ void Ship::update(uint32_t time, Vec2 &force)
     activator->setStartAngle(rotation + (DegreeToRadians * 5.0) + (DegreeToRadians * 180.0));
     activator->setEndAngle(rotation - (DegreeToRadians * 5.0) + (DegreeToRadians * 180.0));
 
+    // Ship explodes if it falls below the bottom.
     if (position.y > screen.bounds.h)
     {
         std::cout << "BOOM!" << std::endl;
     }
 
+    // Prevent from going beyond the left/right walls
     if (position.x >= (screen.bounds.w - BodySize))
     {
         position.x = screen.bounds.w - BodySize - 0.5;
@@ -108,6 +108,8 @@ void Ship::update(uint32_t time, Vec2 &force)
     }
 
     ps.setPosition(position.x, position.y);
+    ps.addForce(Vec2(0.0, 0.015));
+
     ps.update(time);
 }
 

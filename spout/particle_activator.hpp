@@ -11,6 +11,7 @@ class ParticleActivator
 protected:
     float startAngle;
     float endAngle;
+    float minSpeed;
     float maxSpeed;
     float maxLife;
 

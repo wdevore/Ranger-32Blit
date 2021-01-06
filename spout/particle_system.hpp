@@ -30,6 +30,8 @@ public:
     void update(uint32_t time);
     void render();
 
+    void addForce(const Vec2 &force);
+
     void triggerOneShot(std::unique_ptr<ParticleActivator> &activator);
     void triggerAt();
     void triggerExplosion(std::unique_ptr<ParticleActivator> &activator);

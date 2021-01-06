@@ -22,11 +22,6 @@ void ParticleSystem::addParticle(std::unique_ptr<ParticleNode> p)
     particles.push_back(std::move(p));
 }
 
-// void ParticleSystem::setParticleActivator(std::unique_ptr<ParticleActivator> activator)
-// {
-//     this->activator = std::move(activator);
-// }
-
 void ParticleSystem::setPosition(float x, float y)
 {
     epiCenter.x = x;
@@ -43,6 +38,20 @@ void ParticleSystem::setActive(bool active)
     this->active = active;
 }
 
+void ParticleSystem::addForce(const Vec2 &force)
+{
+    if (active)
+    {
+        for (auto &p : particles)
+        {
+            if (p->isActive())
+            {
+                p->addForce(force);
+            }
+        }
+    }
+}
+
 void ParticleSystem::update(uint32_t time)
 {
     if (active)
@@ -50,13 +59,7 @@ void ParticleSystem::update(uint32_t time)
         active = false;
         for (auto &p : particles)
         {
-            if (!p->isActive())
-            {
-                // std::cout << "ps !active: " << time << ", " << p->toString() << std::endl;
-                // if (autoTrigger)
-                //     triggerOneShot();
-            }
-            else
+            if (p->isActive())
             {
                 // std::cout << "ps active: " << time << ", " << p->toString() << std::endl;
                 p->update(time);

@@ -24,7 +24,9 @@ public:
     void setLifeSpan(float duration);
     void setActive(bool active);
     bool isActive();
+
     void setVelocity(float angle, float speed);
+    void addForce(const Vec2 &force);
 
     virtual void update(uint32_t time) = 0;
     virtual void render() = 0;

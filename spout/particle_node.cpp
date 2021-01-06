@@ -41,6 +41,11 @@ void ParticleNode::setVelocity(float angle, float speed)
     velocity.rotate(-angle);
 }
 
+void ParticleNode::addForce(const Vec2 &force)
+{
+    velocity += force;
+}
+
 void ParticleNode::update(uint32_t time)
 {
 
