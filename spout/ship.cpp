@@ -1,12 +1,18 @@
 #include <iostream>
+#include <list>
 
 #include "utilities.hpp"
 #include "ship.hpp"
 #include "activator_arc.hpp"
 #include "particle_node.hpp"
 #include "particle_square.hpp"
+#include "island.hpp"
 
 #define BodySize (int32_t)2
+
+namespace Game {
+    extern std::list<std::unique_ptr<IsLand>> islands;
+}
 
 void Ship::init()
 {
@@ -79,6 +85,8 @@ bool Ship::thrusting()
 
 void Ship::update(uint32_t time, Vec2 &force)
 {
+    using namespace Game;
+
     // Update Velocity
     velocity += (direction + force) * ShipDeceleration;
 
@@ -93,9 +101,12 @@ void Ship::update(uint32_t time, Vec2 &force)
     activator->setEndAngle(rotation - (DegreeToRadians * 5.0) + (DegreeToRadians * 180.0));
 
     // Check for scrolling
-    if (position.y <= ScrollLine)
+    if (position.y <= Spout_ScrollLine)
     {
-        std::cout << "scrolling..." << std::endl;
+        for (auto &island : islands)
+        {
+            island->scroll();
+        }
     }
 
     // Ship explodes if it falls below the bottom.

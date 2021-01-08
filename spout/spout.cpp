@@ -1,19 +1,18 @@
 #include <iostream>
+#include <list>
+
+#include "spout.hpp"
 
 #include "utilities.hpp"
 #include "button.hpp"
-#include "spout.hpp"
 #include "ship.hpp"
-
-// Forward declares
-void draw_stats(uint32_t ms_start, uint32_t ms_end);
-
-using namespace blit;
+#include "island.hpp"
 
 namespace Game
 {
-    Ship ship;
-    Vec2 gravity;
+    extern Ship ship; // Defined in game.cpp
+    extern Vec2 gravity;
+    extern Pen clearColor;
 
     Game::Button MenuButton(blit::Button::MENU);             // "2" on keyboard
     Game::Button HomeButton(blit::Button::HOME);             // "1" on keyboard
@@ -23,12 +22,16 @@ namespace Game
     Game::Button DPAD_RIGHTButton(blit::Button::DPAD_RIGHT); // "->" or "D" on keyboard.
     // Button::X = "C" key
 
-    Pen clearColor = {200, 200, 200};
+    uint32_t pTime = 0;
+    bool updateEnabled = true;
 
+    extern std::list<std::unique_ptr<IsLand>> islands;
+
+    // Forward declares
+    void draw_stats(uint32_t ms_start, uint32_t ms_end);
 } // namespace Game
 
-uint32_t pTime = 0;
-bool updateEnabled = true;
+using namespace blit;
 
 // -----------------------------------------------------------------
 // Intialize
@@ -38,6 +41,9 @@ void init()
     set_screen_mode(ScreenMode::hires);
 
     using namespace Game;
+
+    auto island = std::make_unique<IsLand>();
+    islands.push_back(std::move(island));
 
     ship.init();
 
@@ -53,22 +59,22 @@ void update(uint32_t time)
     using namespace Game;
 
     uint32_t dt = time - pTime;
-    
-    // std::cout << "update: " << time << ", dt: " << dt << std::endl;
-    Game::MenuButton.update();
-    Game::HomeButton.update();
-    Game::AButton.update();
-    Game::YButton.update();
-    Game::DPAD_LEFTButton.update();
-    Game::DPAD_RIGHTButton.update();
 
-    if (Game::MenuButton.pressed())
+    // std::cout << "update: " << time << ", dt: " << dt << std::endl;
+    MenuButton.update();
+    HomeButton.update();
+    AButton.update();
+    YButton.update();
+    DPAD_LEFTButton.update();
+    DPAD_RIGHTButton.update();
+
+    if (MenuButton.pressed())
     {
         ship.destroy();
         exit(0);
     }
 
-    if (Game::HomeButton.tapped())
+    if (HomeButton.tapped())
     {
         ship.reset();
         ship.debug();
@@ -76,11 +82,11 @@ void update(uint32_t time)
 
     // -----------------------------------------
     // Rotate
-    if (Game::DPAD_LEFTButton.pressed())
+    if (DPAD_LEFTButton.pressed())
     {
         ship.rotateCCW();
     }
-    else if (Game::DPAD_RIGHTButton.pressed())
+    else if (DPAD_RIGHTButton.pressed())
     {
         ship.rotateCW();
     }
@@ -88,7 +94,7 @@ void update(uint32_t time)
     // -----------------------------------------
     // Thrust
     // Button::A == "Z" key
-    ship.applyThrust(Game::AButton.pressed());
+    ship.applyThrust(AButton.pressed());
 
     if (YButton.tapped())
     {
@@ -120,8 +126,8 @@ void render(uint32_t time)
     // ******************************************************
     // Debug visuals. Remove in release mode.
     screen.pen = Pen(180, 180, 180);
-    screen.line(Vec2(0, ScrollLine), Vec2(screen.bounds.w, ScrollLine));
+    screen.line(Vec2(0, Spout_ScrollLine), Vec2(screen.bounds.w, Spout_ScrollLine));
 
-    draw_stats(ms_start, ms_end);
+    Game::draw_stats(ms_start, ms_end);
     // ******************************************************
 }

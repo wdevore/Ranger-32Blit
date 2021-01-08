@@ -11,8 +11,8 @@ ActivatorArc::ActivatorArc()
     maxAngularVelocity = 15.0;
     minForce = 15.0;
     maxForce = 30.0;
-    startAngle = DegreeToRadians * 175.0;
-    endAngle = DegreeToRadians * 185.0;
+    startAngle = Game::DegreeToRadians * 175.0;
+    endAngle = Game::DegreeToRadians * 185.0;
 }
 
 void ActivatorArc::activate(std::unique_ptr<ParticleNode> &particle, Vec2 &center)
@@ -20,7 +20,7 @@ void ActivatorArc::activate(std::unique_ptr<ParticleNode> &particle, Vec2 &cente
     ParticleActivator::activate(particle, center);
     // std::cout << "startAngle: " << startAngle << ", endAngle: " << endAngle << std::endl;
 
-    float direction = lerp(startAngle, endAngle, drand48());
+    float direction = Game::lerp(startAngle, endAngle, drand48());
     float speed = minSpeed + maxSpeed * drand48();
 
     particle->setVelocity(direction, speed);

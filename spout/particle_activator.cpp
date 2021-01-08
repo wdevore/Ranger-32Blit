@@ -10,6 +10,7 @@ using namespace blit;
 
 ParticleActivator::ParticleActivator()
 {
+    using namespace Game;
     maxLife = MaxParticleLifetime;
     minSpeed = MinParticleSpeed;
     maxSpeed = MaxParticleSpeed;

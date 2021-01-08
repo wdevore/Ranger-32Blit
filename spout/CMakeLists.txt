@@ -12,6 +12,7 @@ include (${32BLIT_PATH}/32blit.cmake)
 
 blit_executable (${PROJECT_NAME}
     spout.cpp
+    game.cpp
     utilities.cpp
     ship.hpp
     ship.cpp

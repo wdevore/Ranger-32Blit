@@ -1,3 +1,5 @@
+#pragma once
+
 #include "32blit.hpp"
 
 #include "particle_system.hpp"

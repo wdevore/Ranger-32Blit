@@ -1,3 +1,5 @@
+#pragma once
+#include <list>
 #include "32blit.hpp"
 
 #include "particle_node.hpp"
@@ -13,15 +15,13 @@ private:
     bool active;
     bool autoTrigger;
 
-    // std::unique_ptr<ParticleActivator> activator;
-    std::vector<std::unique_ptr<ParticleNode>> particles;
+    std::list<std::unique_ptr<ParticleNode>> particles;
 
 public:
     ParticleSystem();
     void destroy();
 
     void addParticle(std::unique_ptr<ParticleNode> p);
-    // void setParticleActivator(std::unique_ptr<ParticleActivator> activator);
 
     void setPosition(float x, float y);
     void setAutoTrigger(bool enable);
