@@ -1,19 +1,23 @@
 #include "particle_node.hpp"
 
-class BlitButton
+namespace Game
 {
-private:
-    bool keyPressed = false;
-    Button id;
+    class Button
+    {
+    private:
+        bool keyPressed = false;
+        blit::Button id;
 
-public:
-    BlitButton()=default;
-    BlitButton(Button id);
+    public:
+        Button() = default;
+        Button(blit::Button id);
 
-    void update();
+        void update();
 
-    bool tapped();
+        bool tapped();
 
-    bool pressed();
-    bool released();
-};
+        bool pressed();
+        bool released();
+    };
+
+} // namespace Game

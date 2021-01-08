@@ -3,7 +3,6 @@
 #include "utilities.hpp"
 #include "ship.hpp"
 #include "activator_arc.hpp"
-// #include "activator_radial.hpp"
 #include "particle_node.hpp"
 #include "particle_square.hpp"
 
@@ -11,9 +10,8 @@
 
 void Ship::init()
 {
-    // Place ship just below center
-    position = Vec2(screen.bounds.w / 2, screen.bounds.h / 1.5);
-    rotation = 0.0;
+    // Place ship
+    reset();
 
     thrustColor = {255, 255, 255};
     bodyColor = {0, 0, 0};
@@ -37,8 +35,10 @@ void Ship::destroy()
 
 void Ship::reset()
 {
+    rotation = 0.0;
+
     position.x = screen.bounds.w / 2;
-    position.y = screen.bounds.h / 1.5;
+    position.y = screen.bounds.h / 2;
     velocity.x = 0.0;
     velocity.y = 0.0;
 }
@@ -93,7 +93,7 @@ void Ship::update(uint32_t time, Vec2 &force)
     activator->setEndAngle(rotation - (DegreeToRadians * 5.0) + (DegreeToRadians * 180.0));
 
     // Check for scrolling
-    if (position.y >= screen.bounds.h / 2 && position.y < screen.bounds.h / 1.8)
+    if (position.y <= ScrollLine)
     {
         std::cout << "scrolling..." << std::endl;
     }

@@ -18,6 +18,8 @@ blit_executable (${PROJECT_NAME}
     utilities.hpp
     button.hpp
     button.cpp
+    island.hpp
+    island.cpp
     particle_node.hpp
     particle_node.cpp
     particle_circle.hpp

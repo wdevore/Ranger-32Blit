@@ -4,8 +4,8 @@
 
 using namespace blit;
 
-#define ShipAcceleration (float)0.01
-#define ShipDeceleration (float)0.8
+#define ShipAcceleration (float)0.003
+#define ShipDeceleration (float)3.0
 #define ShipRotationalDeceleration (float)0.95
 #define ThrustEngineSize (float)8
 

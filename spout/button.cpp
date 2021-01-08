@@ -2,38 +2,42 @@
 
 #include "button.hpp"
 
-BlitButton::BlitButton(Button id)
+namespace Game
 {
-    this->id = id;
-    keyPressed = false;
-}
-
-void BlitButton::update()
-{
-    if (buttons.pressed & id && !keyPressed)
+    Game::Button::Button(blit::Button id)
     {
-        keyPressed = true;
-    }
-    
-    if (buttons.released & id)
-    {
+        this->id = id;
         keyPressed = false;
     }
-}
 
-bool BlitButton::tapped()
-{
-    bool t = keyPressed;
-    keyPressed = false;
-    return t;
-}
+    void Game::Button::update()
+    {
+        if (buttons.pressed & id && !keyPressed)
+        {
+            keyPressed = true;
+        }
 
-bool BlitButton::pressed()
-{
-    return keyPressed;
-}
+        if (buttons.released & id)
+        {
+            keyPressed = false;
+        }
+    }
 
-bool BlitButton::released()
-{
-    return keyPressed;
-}
+    bool Game::Button::tapped()
+    {
+        bool t = keyPressed;
+        keyPressed = false;
+        return t;
+    }
+
+    bool Game::Button::pressed()
+    {
+        return keyPressed;
+    }
+
+    bool Game::Button::released()
+    {
+        return keyPressed;
+    }
+
+} // namespace Game
