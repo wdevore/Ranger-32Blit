@@ -148,6 +148,8 @@ void update(uint32_t time)
     if (ship.hitTripWire())
         buffer.scroll();
 
+    bool collided = buffer.collide(ship);
+    
     pTime = time;
 }
 

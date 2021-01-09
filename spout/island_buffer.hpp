@@ -1,5 +1,7 @@
 #include "32blit.hpp"
 
+#include "ship.hpp"
+
 //           320
 //   .---------------------.
 //   |                     |
@@ -31,6 +33,9 @@ namespace Game
         void scroll();
         void clear();
         void blit();
+
+        bool collide(Ship &ship);
+        bool pCollide(int x, int y);
     };
 
 } // namespace Game

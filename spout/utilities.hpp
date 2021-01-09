@@ -19,7 +19,7 @@ namespace Game
 
 // Because I need to reference screen bounds I can't use "const". Unfortunately
 // this means the "define" isn't really in the Game namespace any longer.
-#define Spout_ScrollLine (float(blit::screen.bounds.h) / 3.0)
+#define Spout_ScrollLine (float(blit::screen.bounds.h) / 2.2)
 
     float lerp(float min, float max, float t);
 } // namespace Game

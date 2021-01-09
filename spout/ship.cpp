@@ -154,14 +154,28 @@ namespace Game
         ps.render();
 
         // Draw body
-        screen.pen = bodyColor;
+        screen.pen = collide ? collideColor : bodyColor;
         screen.circle(position, BodySize);
     }
 
     bool Ship::hitTripWire()
     {
         return tripped;
-        // return position.y <= Spout_ScrollLine;
+    }
+
+    float Ship::posX()
+    {
+        return position.x;
+    }
+
+    float Ship::posY()
+    {
+        return position.y;
+    }
+
+    void Ship::setCollided(bool collide)
+    {
+        this->collide = collide;
     }
 
     void Ship::debug()

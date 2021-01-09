@@ -32,11 +32,13 @@ namespace Game
 
         Pen thrustColor;
         Pen bodyColor;
+        Pen collideColor = {255, 127, 0};
 
         ParticleSystem ps;
         std::unique_ptr<ParticleActivator> activator;
 
         bool tripped = false;
+        bool collide = false;
         float pY = 0.0;
 
         bool debugF = false;
@@ -57,7 +59,12 @@ namespace Game
         void render();
 
         bool hitTripWire();
-        
+
+        float posX();
+        float posY();
+
+        void setCollided(bool collide);
+
         void debug();
     };
 } // namespace Game

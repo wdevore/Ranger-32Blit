@@ -34,11 +34,11 @@ namespace Game
 
     void IslandBuffer::scroll()
     {
-        for (int row = screen.bounds.h ; row >= 0; row--)
+        for (int row = screen.bounds.h; row >= 0; row--)
         {
             for (int col = 0; col < screen.bounds.w; col++)
             {
-                buffer[col][row] = buffer[col][row-1];
+                buffer[col][row] = buffer[col][row - 1];
             }
         }
     }
@@ -71,4 +71,66 @@ namespace Game
         }
     }
 
+    bool IslandBuffer::collide(Ship &ship)
+    {
+        bool collided = pCollide(ship.posX(), ship.posY());
+        if (collided)
+        {
+            ship.setCollided(true);
+            return collided;
+        }
+
+        collided = pCollide(ship.posX() - 1, ship.posY() + 1);
+        if (collided)
+        {
+            ship.setCollided(true);
+            return collided;
+        }
+
+        collided = pCollide(ship.posX() - 1, ship.posY() - 1);
+        if (collided)
+        {
+            ship.setCollided(true);
+            return collided;
+        }
+
+        collided = pCollide(ship.posX() + 1, ship.posY() - 1);
+        if (collided)
+        {
+            ship.setCollided(true);
+            return collided;
+        }
+
+        collided = pCollide(ship.posX() + 1, ship.posY() + 1);
+        if (collided)
+        {
+            ship.setCollided(true);
+            return collided;
+        }
+
+        ship.setCollided(false);
+        return false;
+    }
+
+    bool IslandBuffer::pCollide(int x, int y)
+    {
+        // Clip
+        if (x < 0)
+            x = 0;
+        else if (x > screen.bounds.w - 1)
+            x = screen.bounds.w - 1;
+
+        if (y < 0)
+            y = 0;
+        else if (y > screen.bounds.h - 1)
+            y = screen.bounds.h - 1;
+
+        if (buffer[x][y] == 1)
+        {
+            // std::cout << "boom..... " << x << "," << y << std::endl;
+            return true;
+        }
+
+        return false;
+    }
 } // namespace Game
