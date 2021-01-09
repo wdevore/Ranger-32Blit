@@ -24,11 +24,13 @@ namespace Game
         void destroy();
 
         void addParticle(std::unique_ptr<ParticleNode> p);
+        std::list<std::unique_ptr<ParticleNode>>& getParticles();
 
         void setPosition(float x, float y);
         void setAutoTrigger(bool enable);
         void setActive(bool active);
-
+        bool isActive();
+        
         void update(uint32_t time);
         void render();
 

@@ -24,6 +24,11 @@ namespace Game
         particles.push_back(std::move(p));
     }
 
+    std::list<std::unique_ptr<ParticleNode>> &ParticleSystem::getParticles()
+    {
+        return particles;
+    }
+
     void ParticleSystem::setPosition(float x, float y)
     {
         epiCenter.x = x;
@@ -38,6 +43,11 @@ namespace Game
     void ParticleSystem::setActive(bool active)
     {
         this->active = active;
+    }
+
+    bool ParticleSystem::isActive()
+    {
+        return active;
     }
 
     void ParticleSystem::addForce(const Vec2 &force)

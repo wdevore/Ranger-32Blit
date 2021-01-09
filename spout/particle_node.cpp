@@ -21,6 +21,16 @@ namespace Game
         position.y = y;
     }
 
+    float ParticleNode::posX()
+    {
+        return position.x;
+    }
+
+    float ParticleNode::posY()
+    {
+        return position.y;
+    }
+
     void ParticleNode::setLifeSpan(float duration)
     {
         lifespan = duration;
@@ -53,7 +63,6 @@ namespace Game
 
         elapsed += time;
         active = elapsed < lifespan;
-        // std::cout << "ParticleNode::update " << elapsed << ", " << active << std::endl;
 
         // Update ParticleNode's position as long as the ParticleNode is active.
         if (active)
@@ -70,6 +79,11 @@ namespace Game
     {
         active = false;
         elapsed = 0;
+    }
+
+    void ParticleNode::setCollided(bool collide)
+    {
+        this->collide = collide;
     }
 
     // std::ostream& operator<<(std::ostream &strm, const std::unique_ptr<ParticleNode> &n) {

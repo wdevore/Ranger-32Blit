@@ -38,6 +38,11 @@ namespace Game
         std::cout << "Ship destroyed." << std::endl;
     }
 
+    ParticleSystem &Ship::particleThrust()
+    {
+        return ps;
+    }
+
     void Ship::reset()
     {
         rotation = 0.0;
@@ -105,7 +110,6 @@ namespace Game
         activator->setEndAngle(rotation - (DegreeToRadians * 5.0) + (DegreeToRadians * 180.0));
 
         // Check for scrolling
-        // float diff = Spout_ScrollLine - position.y;
 
         if (position.y < Spout_ScrollLine)
         {

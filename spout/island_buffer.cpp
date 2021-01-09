@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "island_buffer.hpp"
 #include "utilities.hpp"
+#include "island_buffer.hpp"
 
 namespace Game
 {
@@ -73,35 +73,38 @@ namespace Game
 
     bool IslandBuffer::collide(Ship &ship)
     {
-        bool collided = pCollide(ship.posX(), ship.posY());
+        // Instead of performing a complete pixel perfect collision, I simply
+        // test the corners of a square and its center point. It looks convincing enough.
+
+        bool collided = collide(ship.posX(), ship.posY());
         if (collided)
         {
             ship.setCollided(true);
             return collided;
         }
 
-        collided = pCollide(ship.posX() - 1, ship.posY() + 1);
+        collided = collide(ship.posX() - 1, ship.posY() + 1);
         if (collided)
         {
             ship.setCollided(true);
             return collided;
         }
 
-        collided = pCollide(ship.posX() - 1, ship.posY() - 1);
+        collided = collide(ship.posX() - 1, ship.posY() - 1);
         if (collided)
         {
             ship.setCollided(true);
             return collided;
         }
 
-        collided = pCollide(ship.posX() + 1, ship.posY() - 1);
+        collided = collide(ship.posX() + 1, ship.posY() - 1);
         if (collided)
         {
             ship.setCollided(true);
             return collided;
         }
 
-        collided = pCollide(ship.posX() + 1, ship.posY() + 1);
+        collided = collide(ship.posX() + 1, ship.posY() + 1);
         if (collided)
         {
             ship.setCollided(true);
@@ -109,10 +112,47 @@ namespace Game
         }
 
         ship.setCollided(false);
+
+        collide(ship.particleThrust());
+
         return false;
     }
 
-    bool IslandBuffer::pCollide(int x, int y)
+    bool IslandBuffer::collide(std::unique_ptr<ParticleNode> &p)
+    {
+        bool collided = collide(p->posX(), p->posY());
+        p->setCollided(collided);
+        if (collided)
+        {
+            return collided;
+        }
+        return false;
+    }
+
+    bool IslandBuffer::collide(ParticleSystem &ps)
+    {
+        if (ps.isActive())
+        {
+            for (auto &p : ps.getParticles())
+            {
+                if (p->isActive())
+                {
+                    if (collide(p))
+                    {
+                        clearPixel(p->posX(), p->posY());
+                        clearPixel(p->posX() - 1, p->posY() - 1);
+                        clearPixel(p->posX() + 1, p->posY() + 1);
+                        clearPixel(p->posX() - 1, p->posY() + 1);
+                        clearPixel(p->posX() + 1, p->posY() - 1);
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    bool IslandBuffer::collide(int x, int y)
     {
         // Clip
         if (x < 0)

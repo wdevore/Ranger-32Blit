@@ -17,12 +17,16 @@ namespace Game
         uint32_t lifespan; // Life span
         bool active;
         uint32_t elapsed;
+        bool collide = false;
 
     public:
         ParticleNode() = default;
         ParticleNode(int id);
 
         void setPosition(float x, float y);
+        float posX();
+        float posY();
+
         void setLifeSpan(float duration);
         void setActive(bool active);
         bool isActive();
@@ -33,6 +37,8 @@ namespace Game
         virtual void update(uint32_t time) = 0;
         virtual void render() = 0;
 
+        void setCollided(bool collide);
+        
         void reset();
 
         std::string toString();

@@ -7,6 +7,7 @@ namespace Game
     private:
         Rect body;
         Pen color;
+        Pen collideColor = {127, 127, 255};
 
     public:
         ParticleSquare() = default;

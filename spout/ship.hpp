@@ -64,7 +64,8 @@ namespace Game
         float posY();
 
         void setCollided(bool collide);
-
+        ParticleSystem& particleThrust();
+        
         void debug();
     };
 } // namespace Game
