@@ -7,49 +7,57 @@
 using namespace blit;
 
 #define ShipAcceleration (float)0.003
-#define ShipDeceleration (float)3.0
+#define ShipDeceleration (float)5.0
 #define ShipRotationalDeceleration (float)0.95
 #define ThrustEngineSize (float)8
 
 // The Ship
-class Ship
+namespace Game
 {
-private:
-    // Speed and magnitude
-    Vec2 velocity;
-    Vec2 position;
+    class Ship
+    {
+    private:
+        // Speed and magnitude
+        Vec2 velocity;
+        Vec2 position;
 
-    float rotation = 0;
-    float rotational_velocity = 0;
+        float rotation = 0;
+        float rotational_velocity = 0;
 
-    Vec2 thrust_vector;
-    bool thrust = false;
-    Vec2 direction;
+        Vec2 thrust_vector;
+        bool thrust = false;
+        Vec2 direction;
 
-    Vec2 particleGravity;
+        Vec2 particleGravity;
 
-    Pen thrustColor;
-    Pen bodyColor;
+        Pen thrustColor;
+        Pen bodyColor;
 
-    ParticleSystem ps;
-    std::unique_ptr<ParticleActivator> activator;
+        ParticleSystem ps;
+        std::unique_ptr<ParticleActivator> activator;
 
-    bool debugF = false;
+        bool tripped = false;
+        float pY = 0.0;
 
-public:
-    void init();
-    void destroy();
+        bool debugF = false;
 
-    void reset();
+    public:
+        void init();
+        void destroy();
 
-    void rotateCW();
-    void rotateCCW();
+        void reset();
 
-    void applyThrust(bool thrust);
-    bool thrusting();
+        void rotateCW();
+        void rotateCCW();
 
-    void update(uint32_t time, Vec2 &force);
-    void render();
+        void applyThrust(bool thrust);
+        bool thrusting();
 
-    void debug();
-};
+        void update(uint32_t time, Vec2 &force);
+        void render();
+
+        bool hitTripWire();
+        
+        void debug();
+    };
+} // namespace Game

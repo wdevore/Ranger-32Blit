@@ -1,11 +1,14 @@
 #include "particle_activator.hpp"
 #include "particle_node.hpp"
 
-// Generate particles in 360 degrees.
-class ActivatorRadial : public ParticleActivator
+namespace Game
 {
-public:
-    ActivatorRadial() = default;
+    // Generate particles in 360 degrees.
+    class ActivatorRadial : public ParticleActivator
+    {
+    public:
+        ActivatorRadial() = default;
 
-    void activate(std::unique_ptr<ParticleNode> &particle, Vec2 &center) override;
-};
+        void activate(std::unique_ptr<ParticleNode> &particle, Vec2 &center) override;
+    };
+} // namespace Game

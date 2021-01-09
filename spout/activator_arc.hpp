@@ -1,17 +1,20 @@
 #include "particle_activator.hpp"
 #include "particle_node.hpp"
 
-class ActivatorArc : public ParticleActivator
+namespace Game
 {
-private:
-    float minLife;
-    float minAngularVelocity;
-    float maxAngularVelocity;
-    float minForce;
-    float maxForce;
+    class ActivatorArc : public ParticleActivator
+    {
+    private:
+        float minLife;
+        float minAngularVelocity;
+        float maxAngularVelocity;
+        float minForce;
+        float maxForce;
 
-public:
-    ActivatorArc();
+    public:
+        ActivatorArc();
 
-    void activate(std::unique_ptr<ParticleNode> &particle, Vec2 &center) override;
-};
+        void activate(std::unique_ptr<ParticleNode> &particle, Vec2 &center) override;
+    };
+} // namespace Game

@@ -1,5 +1,6 @@
 #include <iostream>
 
+#include "utilities.hpp"
 #include "island.hpp"
 
 namespace Game
@@ -7,27 +8,40 @@ namespace Game
     IsLand::IsLand(int id)
     {
         this->id = id;
-        color = {64, 64, 64};
-        _scroll = false;
     }
 
     void IsLand::scroll()
     {
-        std::cout << "scrolling (" << id << ")" << std::endl;
+        // It's time to generate a new row of "pixels"
+
+        // std::cout << "scrolling (" << id << ")" << std::endl;
         _scroll = true;
+        shiftRate.adjust();
     }
 
     void IsLand::update(uint32_t time)
     {
-        // If a scroll occurred then generate new values for creating a new line.
-        if (_scroll)
+        if (hCnt >= height)
         {
-            _scroll = false;
+            reset();
+            hCnt = 0;
+            return;
         }
+
+        shiftRate.update();
+        // std::cout << shiftRate.iValue();
+        hCnt++;
     }
 
     void IsLand::render()
     {
     }
 
+    void IsLand::reset()
+    {
+        // Configure for another island by generating new values.
+        height = 3 + int(drand48() * 10);
+
+        shiftRate.adjust();
+    }
 } // namespace Game

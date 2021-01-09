@@ -7,32 +7,35 @@
 
 using namespace blit;
 
-class ParticleSystem
+namespace Game
 {
-private:
-    Vec2 epiCenter;
+    class ParticleSystem
+    {
+    private:
+        Vec2 epiCenter;
 
-    bool active;
-    bool autoTrigger;
+        bool active;
+        bool autoTrigger;
 
-    std::list<std::unique_ptr<ParticleNode>> particles;
+        std::list<std::unique_ptr<ParticleNode>> particles;
 
-public:
-    ParticleSystem();
-    void destroy();
+    public:
+        ParticleSystem();
+        void destroy();
 
-    void addParticle(std::unique_ptr<ParticleNode> p);
+        void addParticle(std::unique_ptr<ParticleNode> p);
 
-    void setPosition(float x, float y);
-    void setAutoTrigger(bool enable);
-    void setActive(bool active);
+        void setPosition(float x, float y);
+        void setAutoTrigger(bool enable);
+        void setActive(bool active);
 
-    void update(uint32_t time);
-    void render();
+        void update(uint32_t time);
+        void render();
 
-    void addForce(const Vec2 &force);
+        void addForce(const Vec2 &force);
 
-    void triggerOneShot(std::unique_ptr<ParticleActivator> &activator);
-    void triggerAt();
-    void triggerExplosion(std::unique_ptr<ParticleActivator> &activator);
-};
+        void triggerOneShot(std::unique_ptr<ParticleActivator> &activator);
+        void triggerAt();
+        void triggerExplosion(std::unique_ptr<ParticleActivator> &activator);
+    };
+} // namespace Game

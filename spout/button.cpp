@@ -12,12 +12,12 @@ namespace Game
 
     void Game::Button::update()
     {
-        if (buttons.pressed & id && !keyPressed)
+        if (blit::buttons.pressed & id && !keyPressed)
         {
             keyPressed = true;
         }
 
-        if (buttons.released & id)
+        if (blit::buttons.released & id)
         {
             keyPressed = false;
         }

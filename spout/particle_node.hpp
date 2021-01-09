@@ -4,34 +4,37 @@
 
 using namespace blit;
 
-class ParticleNode
+namespace Game
 {
-public:
-    int id;
+    class ParticleNode
+    {
+    public:
+        int id;
 
-protected:
-    Vec2 position;
-    Vec2 velocity;
-    uint32_t lifespan; // Life span
-    bool active;
-    uint32_t elapsed;
+    protected:
+        Vec2 position;
+        Vec2 velocity;
+        uint32_t lifespan; // Life span
+        bool active;
+        uint32_t elapsed;
 
-public:
-    ParticleNode() = default;
-    ParticleNode(int id);
+    public:
+        ParticleNode() = default;
+        ParticleNode(int id);
 
-    void setPosition(float x, float y);
-    void setLifeSpan(float duration);
-    void setActive(bool active);
-    bool isActive();
+        void setPosition(float x, float y);
+        void setLifeSpan(float duration);
+        void setActive(bool active);
+        bool isActive();
 
-    void setVelocity(float angle, float speed);
-    void addForce(const Vec2 &force);
+        void setVelocity(float angle, float speed);
+        void addForce(const Vec2 &force);
 
-    virtual void update(uint32_t time) = 0;
-    virtual void render() = 0;
+        virtual void update(uint32_t time) = 0;
+        virtual void render() = 0;
 
-    void reset();
+        void reset();
 
-    std::string toString();
-};
+        std::string toString();
+    };
+} // namespace Game

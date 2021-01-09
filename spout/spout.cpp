@@ -2,11 +2,13 @@
 #include <list>
 
 #include "spout.hpp"
+#include "game.hpp"
 
 #include "utilities.hpp"
 #include "button.hpp"
 #include "ship.hpp"
 #include "island.hpp"
+#include "island_buffer.hpp"
 
 namespace Game
 {
@@ -26,6 +28,10 @@ namespace Game
     bool updateEnabled = true;
 
     extern std::list<std::unique_ptr<IsLand>> islands;
+    extern std::list<std::string> islandMap;
+
+    extern State gameState;
+    extern IslandBuffer buffer;
 
     // Forward declares
     void draw_stats(uint32_t ms_start, uint32_t ms_end);
@@ -38,17 +44,52 @@ using namespace blit;
 // -----------------------------------------------------------------
 void init()
 {
+    drand48(); // Prime RNG
+
     set_screen_mode(ScreenMode::hires);
+
+    std::cout << "Dimesions: " << screen.bounds.w << " x " << screen.bounds.h << std::endl;
 
     using namespace Game;
 
-    auto island = std::make_unique<IsLand>();
-    islands.push_back(std::move(island));
+    auto island = std::make_unique<IsLand>(0);
 
     ship.init();
 
-    gravity.x = 0.0;
-    gravity.y = GravityAcceleration;
+    buffer.clear();
+    // for (int i = 0; i < 320; i += 1)
+    //     buffer.setPixel(i, 239);
+
+    // island->reset();
+    // for (int i = 0; i < 100; i++)
+    // {
+    //     island->scroll();
+    //     for (int i = 0; i < 10; i++)
+    //     {
+    //         island->update(10);
+    //     }
+    // }
+    // std::cout << std::endl;
+
+    islands.push_back(std::move(island));
+
+    int xoff = 100;
+    int yoff = 25;
+    int x = 0;
+    int y = 0;
+    for (auto &row : Game::islandMap)
+    {
+        for (auto &c : row)
+        {
+            if (c == '1')
+                buffer.setPixel(x + xoff, y + yoff);
+            // std::cout << c;
+            x++;
+        }
+        x = 0;
+        y++;
+        // std::cout << std::endl;
+    }
 }
 
 // -----------------------------------------------------------------
@@ -104,6 +145,9 @@ void update(uint32_t time)
     if (updateEnabled)
         ship.update(dt, gravity);
 
+    if (ship.hitTripWire())
+        buffer.scroll();
+
     pTime = time;
 }
 
@@ -119,14 +163,16 @@ void render(uint32_t time)
     screen.pen = clearColor;
     screen.clear();
 
+    buffer.blit();
+
     ship.render();
 
     uint32_t ms_end = now();
 
     // ******************************************************
     // Debug visuals. Remove in release mode.
-    screen.pen = Pen(180, 180, 180);
-    screen.line(Vec2(0, Spout_ScrollLine), Vec2(screen.bounds.w, Spout_ScrollLine));
+    // screen.pen = Pen(255, 200, 0);
+    // screen.line(Vec2(0, Spout_ScrollLine), Vec2(screen.bounds.w, Spout_ScrollLine));
 
     Game::draw_stats(ms_start, ms_end);
     // ******************************************************

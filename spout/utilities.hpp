@@ -6,8 +6,10 @@
 
 namespace Game
 {
-    // Gravity is typically 0.001
-    const float GravityAcceleration = 0.001;
+    const int MaxThrustParticles = 150;
+    const float MaxUpwardVelocity = 0.2;
+    const float MaxDownwardVelocity = 0.3;
+    const float GravityAcceleration = 0.00075;
     const float Pi = 3.1415926535897932384626433;
     const float DegreeToRadians = Pi / 180.0;
 
@@ -17,7 +19,7 @@ namespace Game
 
 // Because I need to reference screen bounds I can't use "const". Unfortunately
 // this means the "define" isn't really in the Game namespace any longer.
-#define Spout_ScrollLine (float(blit::screen.bounds.h) / 2.5)
+#define Spout_ScrollLine (float(blit::screen.bounds.h) / 3.0)
 
     float lerp(float min, float max, float t);
 } // namespace Game

@@ -19,6 +19,8 @@ blit_executable (${PROJECT_NAME}
     utilities.hpp
     button.hpp
     button.cpp
+    parameter.hpp
+    parameter.cpp
     island.hpp
     island.cpp
     particle_node.hpp
@@ -35,6 +37,8 @@ blit_executable (${PROJECT_NAME}
     activator_arc.cpp
     activator_radial.hpp
     activator_radial.cpp
+    island_buffer.hpp
+    island_buffer.cpp
     )
     
 blit_metadata (${PROJECT_NAME} metadata.yml)

@@ -2,13 +2,16 @@
 
 #include "activator_radial.hpp"
 
-void ActivatorRadial::activate(std::unique_ptr<ParticleNode> &particle, Vec2 &center)
+namespace Game
 {
-    ParticleActivator::activate(particle, center);
+    void ActivatorRadial::activate(std::unique_ptr<ParticleNode> &particle, Vec2 &center)
+    {
+        ParticleActivator::activate(particle, center);
 
-    float direction = 360.0 * drand48();
-    float speed = minSpeed + maxSpeed * drand48();
-    // std::cout << "direction: " << direction << ", speed: " << speed << std::endl;
+        float direction = 360.0 * drand48();
+        float speed = minSpeed + maxSpeed * drand48();
+        // std::cout << "direction: " << direction << ", speed: " << speed << std::endl;
 
-    particle->setVelocity(direction, speed);
-}
+        particle->setVelocity(direction, speed);
+    }
+} // namespace Game

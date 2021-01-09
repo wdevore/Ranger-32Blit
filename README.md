@@ -63,6 +63,10 @@ Most of the time the Line changes shape and position slowly, but occasionally it
 Each line has a width and center position on the current row. At the beginning and ending of the bbox the line shortens 50% of the time.
 
 ### Line Parameters:
+--How long a parameter remains at its current value.
+
+Rate, Duration, Gap, Range
+
 * ShiftRate: How fast the line shifts Left or Right
 * ShiftDuration: How long the line is allowed to shift. -1 = No shift
 * ShiftGap: How long between and changes
