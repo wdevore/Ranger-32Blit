@@ -2,13 +2,13 @@
 #include <list>
 
 #include "spout.hpp"
-#include "game.hpp"
+#include "game/game.hpp"
 
-#include "utilities.hpp"
-#include "button.hpp"
-#include "ship.hpp"
-#include "island.hpp"
-#include "island_buffer.hpp"
+#include "game/defines.hpp"
+#include "gui/button.hpp"
+#include "game/ship.hpp"
+#include "islands/island.hpp"
+#include "islands/island_buffer.hpp"
 
 namespace Game
 {
@@ -27,7 +27,7 @@ namespace Game
     uint32_t pTime = 0;
     bool updateEnabled = true;
 
-    extern std::list<std::unique_ptr<IsLand>> islands;
+    // extern std::list<std::unique_ptr<IsLand>> islands;
     extern std::list<std::string> islandMap;
 
     extern State gameState;
@@ -52,26 +52,13 @@ void init()
 
     using namespace Game;
 
-    auto island = std::make_unique<IsLand>(0);
+    // auto island = std::make_unique<IsLand>(0);
 
     ship.init();
 
     buffer.clear();
-    // for (int i = 0; i < 320; i += 1)
-    //     buffer.setPixel(i, 239);
 
-    // island->reset();
-    // for (int i = 0; i < 100; i++)
-    // {
-    //     island->scroll();
-    //     for (int i = 0; i < 10; i++)
-    //     {
-    //         island->update(10);
-    //     }
-    // }
-    // std::cout << std::endl;
-
-    islands.push_back(std::move(island));
+    // islands.push_back(std::move(island));
 
     int xoff = 100;
     int yoff = 25;
@@ -150,6 +137,10 @@ void update(uint32_t time)
 
     bool collided = buffer.collide(ship);
     
+    if (ship.isDead()) {
+        ship.reset();
+    }
+
     pTime = time;
 }
 
@@ -173,7 +164,7 @@ void render(uint32_t time)
 
     // ******************************************************
     // Debug visuals. Remove in release mode.
-    // screen.pen = Pen(255, 200, 0);
+    // screen.pen = Pen(255, 127, 100);
     // screen.line(Vec2(0, Spout_ScrollLine), Vec2(screen.bounds.w, Spout_ScrollLine));
 
     Game::draw_stats(ms_start, ms_end);

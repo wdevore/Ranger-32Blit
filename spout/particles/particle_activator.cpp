@@ -2,7 +2,7 @@
 
 #include "32blit.hpp"
 
-#include "utilities.hpp"
+#include "../game/defines.hpp"
 #include "particle_node.hpp"
 #include "particle_activator.hpp"
 

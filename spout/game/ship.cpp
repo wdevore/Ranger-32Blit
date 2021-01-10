@@ -1,11 +1,11 @@
 #include <iostream>
 #include <list>
 
-#include "utilities.hpp"
+#include "defines.hpp"
 #include "ship.hpp"
-#include "activator_arc.hpp"
-#include "particle_square.hpp"
-#include "island.hpp"
+#include "../particles/activator_arc.hpp"
+#include "../particles/particle_square.hpp"
+#include "../islands/island.hpp"
 
 #define BodySize (int32_t)2
 
@@ -46,7 +46,7 @@ namespace Game
     void Ship::reset()
     {
         rotation = 0.0;
-
+        died = false;
         position.x = screen.bounds.w / 2;
         position.y = screen.bounds.h / 2;
         velocity.x = 0.0;
@@ -55,12 +55,12 @@ namespace Game
 
     void Ship::rotateCW()
     {
-        rotational_velocity -= pi / 720.0 / 1.5;
+        rotational_velocity -= pi / 720.0 / RotationalRate;
     }
 
     void Ship::rotateCCW()
     {
-        rotational_velocity += pi / 720.0 / 1.5;
+        rotational_velocity += pi / 720.0 / RotationalRate;
     }
 
     void Ship::applyThrust(bool thrust)
@@ -125,6 +125,7 @@ namespace Game
         if (position.y > screen.bounds.h)
         {
             // std::cout << "BOOM!" << std::endl;
+            died = true;
         }
 
         // Prevent ship from going beyond the left/right walls
@@ -180,6 +181,11 @@ namespace Game
     void Ship::setCollided(bool collide)
     {
         this->collide = collide;
+    }
+
+    bool Ship::isDead()
+    {
+        return died;
     }
 
     void Ship::debug()

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "utilities.hpp"
+#include "../game/defines.hpp"
 #include "island.hpp"
 
 namespace Game

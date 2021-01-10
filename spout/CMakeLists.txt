@@ -12,33 +12,34 @@ include (${32BLIT_PATH}/32blit.cmake)
 
 blit_executable (${PROJECT_NAME}
     spout.cpp
-    game.cpp
-    utilities.cpp
-    ship.hpp
-    ship.cpp
-    utilities.hpp
-    button.hpp
-    button.cpp
-    parameter.hpp
-    parameter.cpp
-    island.hpp
-    island.cpp
-    particle_node.hpp
-    particle_node.cpp
-    particle_circle.hpp
-    particle_circle.cpp
-    particle_square.hpp
-    particle_square.cpp
-    particle_system.hpp
-    particle_system.cpp
-    particle_activator.hpp
-    particle_activator.cpp
-    activator_arc.hpp
-    activator_arc.cpp
-    activator_radial.hpp
-    activator_radial.cpp
-    island_buffer.hpp
-    island_buffer.cpp
+    game/game.cpp
+    game/defines.hpp
+    game/defines.cpp
+    game/ship.hpp
+    game/ship.cpp
+    game/parameter.hpp
+    game/parameter.cpp
+    gui/button.hpp
+    gui/button.cpp
+    particles/particle_node.hpp
+    particles/particle_node.cpp
+    particles/particle_circle.hpp
+    particles/particle_circle.cpp
+    particles/particle_square.hpp
+    particles/particle_square.cpp
+    particles/particle_system.hpp
+    particles/particle_system.cpp
+    particles/particle_activator.hpp
+    particles/particle_activator.cpp
+    particles/activator_arc.hpp
+    particles/activator_arc.cpp
+    particles/activator_radial.hpp
+    particles/activator_radial.cpp
+    islands/island.hpp
+    islands/island.cpp
+    islands/island_buffer.hpp
+    islands/island_buffer.cpp
+    islands/island_maps.cpp
     )
     
 blit_metadata (${PROJECT_NAME} metadata.yml)

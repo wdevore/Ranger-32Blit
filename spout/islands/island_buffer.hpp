@@ -1,8 +1,8 @@
 #include "32blit.hpp"
 
-#include "ship.hpp"
-#include "particle_node.hpp"
-#include "particle_system.hpp"
+#include "../game/ship.hpp"
+#include "../particles/particle_node.hpp"
+#include "../particles/particle_system.hpp"
 
 namespace Game
 {

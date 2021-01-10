@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "utilities.hpp"
+#include "../game/defines.hpp"
 #include "island_buffer.hpp"
 
 namespace Game
@@ -177,7 +177,6 @@ namespace Game
 
         if (buffer[x][y] == 1)
         {
-            // std::cout << "boom..... " << x << "," << y << std::endl;
             return true;
         }
 

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "utilities.hpp"
+#include "defines.hpp"
 #include "parameter.hpp"
 
 namespace Game

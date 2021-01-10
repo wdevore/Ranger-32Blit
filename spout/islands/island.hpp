@@ -2,7 +2,7 @@
 
 using namespace blit;
 
-#include "parameter.hpp"
+#include "../game/parameter.hpp"
 
 namespace Game
 {

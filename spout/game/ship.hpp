@@ -2,7 +2,7 @@
 
 #include "32blit.hpp"
 
-#include "particle_system.hpp"
+#include "../particles/particle_system.hpp"
 
 using namespace blit;
 
@@ -39,6 +39,7 @@ namespace Game
 
         bool tripped = false;
         bool collide = false;
+        bool died = false;
         float pY = 0.0;
 
         bool debugF = false;
@@ -66,6 +67,8 @@ namespace Game
         void setCollided(bool collide);
         ParticleSystem& particleThrust();
         
+        bool isDead();
+
         void debug();
     };
 } // namespace Game

@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "utilities.hpp"
+#include "../game/defines.hpp"
 #include "activator_arc.hpp"
 
 namespace Game

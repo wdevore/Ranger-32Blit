@@ -51,10 +51,10 @@ namespace Game
     void ParticleSquare::render()
     {
         // Draw body
-        if (collide)
-            screen.pen = collideColor;
-        else
-            screen.pen = color;
+        // if (collide)
+        //     screen.pen = collideColor;
+        // else
+        screen.pen = color;
         body.x = int32_t(float(position.x) - float(body.w) / 2.0);
         body.y = int32_t(float(position.y) - float(body.h) / 2.0);
         // if (id == 0)
