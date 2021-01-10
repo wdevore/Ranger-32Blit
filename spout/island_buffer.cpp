@@ -133,17 +133,27 @@ namespace Game
     {
         if (ps.isActive())
         {
+            int x = 0;
+            int y = 0;
             for (auto &p : ps.getParticles())
             {
                 if (p->isActive())
                 {
                     if (collide(p))
                     {
-                        clearPixel(p->posX(), p->posY());
-                        clearPixel(p->posX() - 1, p->posY() - 1);
-                        clearPixel(p->posX() + 1, p->posY() + 1);
-                        clearPixel(p->posX() - 1, p->posY() + 1);
-                        clearPixel(p->posX() + 1, p->posY() - 1);
+                        p->setActive(false);
+                        // Clear a total of 9 pixels.
+                        x = p->posX();
+                        y = p->posY();
+                        buffer[x][y] = 0;
+                        buffer[x - 1][y - 1] = 0;
+                        buffer[x + 1][y + 1] = 0;
+                        buffer[x - 1][y + 1] = 0;
+                        buffer[x + 1][y - 1] = 0;
+                        buffer[x - 1][y] = 0;
+                        buffer[x + 1][y] = 0;
+                        buffer[x][y + 1] = 0;
+                        buffer[x][y - 1] = 0;
                     }
                 }
             }
