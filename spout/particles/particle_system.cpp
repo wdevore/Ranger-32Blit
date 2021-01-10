@@ -16,7 +16,7 @@ namespace Game
 
     void ParticleSystem::destroy()
     {
-        std::cout << "ParticleSystem destroyed" << std::endl;
+        // std::cout << "ParticleSystem destroyed" << std::endl;
     }
 
     void ParticleSystem::addParticle(std::unique_ptr<ParticleNode> p)

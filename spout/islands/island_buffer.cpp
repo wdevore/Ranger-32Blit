@@ -34,7 +34,7 @@ namespace Game
 
     void IslandBuffer::scroll()
     {
-        for (int row = screen.bounds.h; row >= 0; row--)
+        for (int row = screen.bounds.h - 1; row > 0; row--)
         {
             for (int col = 0; col < screen.bounds.w; col++)
             {

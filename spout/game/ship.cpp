@@ -35,7 +35,7 @@ namespace Game
     void Ship::destroy()
     {
         ps.destroy();
-        std::cout << "Ship destroyed." << std::endl;
+        // std::cout << "Ship destroyed." << std::endl;
     }
 
     ParticleSystem &Ship::particleThrust()

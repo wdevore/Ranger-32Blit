@@ -4,11 +4,13 @@ namespace Game
 {
     enum class State
     {
-        Boot,
-        Exit,
-        Menu,
-        EnterPlay,
-        Play,
-        ExitPlay
+        Boot,      // Misc
+        Splash,    // Hello
+        Menu,      // Play, Scores, Settings, Quit
+        EnterPlay, // Prep game
+        Play,      // Playing the game
+        ExitPlay,  // Player died
+        PlayAgain,
+        Exit // Exit back to 32Blit menu
     };
 } // namespace Game

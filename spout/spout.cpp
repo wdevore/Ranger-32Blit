@@ -44,7 +44,7 @@ using namespace blit;
 // -----------------------------------------------------------------
 void init()
 {
-    drand48(); // Prime RNG
+    drand48(); // Nudge the RNG
 
     set_screen_mode(ScreenMode::hires);
 
@@ -61,7 +61,7 @@ void init()
     // islands.push_back(std::move(island));
 
     int xoff = 100;
-    int yoff = 25;
+    int yoff = 200;
     int x = 0;
     int y = 0;
     for (auto &row : Game::islandMap)
@@ -99,6 +99,7 @@ void update(uint32_t time)
     if (MenuButton.pressed())
     {
         ship.destroy();
+        std::cout << "Goodbye World" << std::endl;
         exit(0);
     }
 
