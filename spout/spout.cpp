@@ -9,6 +9,10 @@
 #include "game/ship.hpp"
 #include "islands/island.hpp"
 #include "islands/island_buffer.hpp"
+#include "scenes/scene_manager.hpp"
+
+#include "scenes/scene_boot.hpp"
+#include "scenes/scene_splash.hpp"
 
 namespace Game
 {
@@ -33,6 +37,8 @@ namespace Game
     extern State gameState;
     extern IslandBuffer buffer;
 
+    extern SceneManager sceneMan;
+
     // Forward declares
     void draw_stats(uint32_t ms_start, uint32_t ms_end);
 } // namespace Game
@@ -52,6 +58,18 @@ void init()
 
     using namespace Game;
 
+    sceneMan.init();
+
+    // Add scenes that the manager will manage.
+    sceneMan.addScene(std::make_unique<BootScene>("BootScene"));
+    sceneMan.addScene(std::make_unique<SplashScene>("SplashScene"));
+
+    // Push the scenes in the opposite order they will run.
+    sceneMan.pushScene("SplashScene");
+    sceneMan.pushScene("BootScene"); // Boot runs first so it is pushed last.
+
+    // sceneMan.popScene();
+
     // auto island = std::make_unique<IsLand>(0);
 
     ship.init();
@@ -61,7 +79,7 @@ void init()
     // islands.push_back(std::move(island));
 
     int xoff = 100;
-    int yoff = 200;
+    int yoff = 100;
     int x = 0;
     int y = 0;
     for (auto &row : Game::islandMap)
@@ -89,6 +107,15 @@ void update(uint32_t time)
     uint32_t dt = time - pTime;
 
     // std::cout << "update: " << time << ", dt: " << dt << std::endl;
+
+    bool moreScenes = sceneMan.update(dt);
+
+    if (!moreScenes)
+    {
+        std::cout << "Goodbye World" << std::endl;
+        exit(0);
+    }
+
     MenuButton.update();
     HomeButton.update();
     AButton.update();
@@ -98,7 +125,6 @@ void update(uint32_t time)
 
     if (MenuButton.pressed())
     {
-        ship.destroy();
         std::cout << "Goodbye World" << std::endl;
         exit(0);
     }
@@ -137,8 +163,9 @@ void update(uint32_t time)
         buffer.scroll();
 
     bool collided = buffer.collide(ship);
-    
-    if (ship.isDead()) {
+
+    if (ship.isDead())
+    {
         ship.reset();
     }
 
@@ -158,6 +185,9 @@ void render(uint32_t time)
     screen.clear();
 
     buffer.blit();
+
+    sceneMan.render();
+
 
     ship.render();
 

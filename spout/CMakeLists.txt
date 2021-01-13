@@ -40,6 +40,16 @@ blit_executable (${PROJECT_NAME}
     islands/island_buffer.hpp
     islands/island_buffer.cpp
     islands/island_maps.cpp
+    scenes/scene_manager.hpp
+    scenes/scene_manager.cpp
+    scenes/scene.hpp
+    scenes/scene.cpp
+    scenes/scene_boot.hpp
+    scenes/scene_boot.cpp
+    scenes/scene_splash.hpp
+    scenes/scene_splash.cpp
+    scenes/scene_game.hpp
+    scenes/scene_game.cpp
     )
     
 blit_metadata (${PROJECT_NAME} metadata.yml)
