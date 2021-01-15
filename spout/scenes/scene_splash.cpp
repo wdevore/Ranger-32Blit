@@ -9,34 +9,52 @@ namespace Game
 
     SplashScene::SplashScene(std::string name) : Scene{name}
     {
-        disposeOnExit = false;
+        disposeOnExit = true;
     }
 
-    void SplashScene::init()
+    void SplashScene::update(uint32_t time)
     {
-        duration = 3000; // 3 seconds
-        duractionCnt = 0;
-    }
-
-    bool SplashScene::update(uint32_t time)
-    {
-        if (duractionCnt > duration)
+        switch (state)
         {
-            duractionCnt = 0;
-            return true; // Signal scene is done
+        case SceneState::OnStage:
+        {
+            if (durationCnt > duration)
+            {
+                durationCnt = 0;
+                state = SceneState::Exit; // Signal scene is done and wants to exit
+            }
+
+            durationCnt += time;
         }
+        break;
 
-        duractionCnt += time;
-
-        return false;
+        default:
+            break;
+        }
     }
 
     void SplashScene::render()
     {
         screen.pen = Pen(255, 255, 255);
-        screen.rectangle(Rect(0, 0, screen.bounds.w, 14));
+        screen.rectangle(Rect(0, screen.bounds.h / 2, screen.bounds.w, 14));
         screen.pen = Pen(0, 0, 0);
-        screen.text("Splash", minimal_font, Point(5, 4));
+        screen.text("Splash", minimal_font, Point(5, screen.bounds.h / 2 + 4));
+    }
+
+    std::string SplashScene::NextScene()
+    {
+        return "GameScene";
+    }
+
+    void SplashScene::EnterScene()
+    {
+        duration = 500; // 1 seconds
+        durationCnt = 0;
+        state = SceneState::OnStage; // Immediate transition onto the stage
+    }
+
+    void SplashScene::ExitScene()
+    {
     }
 
 } // namespace Game

@@ -8,9 +8,11 @@ namespace Game
     public:
         BootScene(std::string scName);
 
-        void init() override;
-        bool update(uint32_t time) override;
+        void update(uint32_t time) override;
         void render() override;
+
+        void EnterScene() override;
+        void ExitScene() override;
     };
 
 } // namespace Game

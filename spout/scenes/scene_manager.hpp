@@ -6,6 +6,14 @@
 
 namespace Game
 {
+    // The scenes to be managed by the SceneManager.
+    // Any scene that is running is removed from the collection
+    // and handed over to the SceneManager. Once the scene has
+    // exited the stage it is handed back the collection
+    // --unless the scene is to be destroyed. For example, once the
+    // BootScene is done it is destroyed meaning it isn't added
+    // back to the collection.
+
     class SceneManager
     {
     private:
@@ -20,10 +28,10 @@ namespace Game
     public:
         SceneManager();
 
-        void addScene(std::unique_ptr<Scene> scene);
+        void add(std::unique_ptr<Scene> scene);
 
-        void pushScene(std::string name);
-        bool popScene();
+        void queue(std::string name);
+        bool pop();
 
         void init();
         bool update(uint32_t time);

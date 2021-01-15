@@ -1,49 +1,34 @@
 #include <iostream>
 #include <list>
 
+#include "engine/api_private.hpp"
 #include "spout.hpp"
 #include "game/game.hpp"
 
 #include "game/defines.hpp"
 #include "gui/button.hpp"
-#include "game/ship.hpp"
-#include "islands/island.hpp"
-#include "islands/island_buffer.hpp"
 #include "scenes/scene_manager.hpp"
 
 #include "scenes/scene_boot.hpp"
 #include "scenes/scene_splash.hpp"
+#include "scenes/scene_game.hpp"
+
+using namespace blit;
 
 namespace Game
 {
-    extern Ship ship; // Defined in game.cpp
-    extern Vec2 gravity;
-    extern Pen clearColor;
+    Pen clearColor = {200, 200, 200};
 
-    Game::Button MenuButton(blit::Button::MENU);             // "2" on keyboard
-    Game::Button HomeButton(blit::Button::HOME);             // "1" on keyboard
-    Game::Button AButton(blit::Button::A);                   // "Z" on keyboard
-    Game::Button YButton(blit::Button::Y);                   // "V" on keyboard
-    Game::Button DPAD_LEFTButton(blit::Button::DPAD_LEFT);   // "<-" or "A" on keyboard.
-    Game::Button DPAD_RIGHTButton(blit::Button::DPAD_RIGHT); // "->" or "D" on keyboard.
+    Game::Button MenuButton(blit::Button::MENU); // "2" on keyboard
     // Button::X = "C" key
 
     uint32_t pTime = 0;
-    bool updateEnabled = true;
-
-    // extern std::list<std::unique_ptr<IsLand>> islands;
-    extern std::list<std::string> islandMap;
-
-    extern State gameState;
-    extern IslandBuffer buffer;
 
     extern SceneManager sceneMan;
 
     // Forward declares
     void draw_stats(uint32_t ms_start, uint32_t ms_end);
 } // namespace Game
-
-using namespace blit;
 
 // -----------------------------------------------------------------
 // Intialize
@@ -61,40 +46,13 @@ void init()
     sceneMan.init();
 
     // Add scenes that the manager will manage.
-    sceneMan.addScene(std::make_unique<BootScene>("BootScene"));
-    sceneMan.addScene(std::make_unique<SplashScene>("SplashScene"));
+    sceneMan.add(std::make_unique<BootScene>("BootScene"));
+    sceneMan.add(std::make_unique<SplashScene>("SplashScene"));
+    sceneMan.add(std::make_unique<GameScene>("GameScene"));
 
-    // Push the scenes in the opposite order they will run.
-    sceneMan.pushScene("SplashScene");
-    sceneMan.pushScene("BootScene"); // Boot runs first so it is pushed last.
-
-    // sceneMan.popScene();
-
-    // auto island = std::make_unique<IsLand>(0);
-
-    ship.init();
-
-    buffer.clear();
-
-    // islands.push_back(std::move(island));
-
-    int xoff = 100;
-    int yoff = 100;
-    int x = 0;
-    int y = 0;
-    for (auto &row : Game::islandMap)
-    {
-        for (auto &c : row)
-        {
-            if (c == '1')
-                buffer.setPixel(x + xoff, y + yoff);
-            // std::cout << c;
-            x++;
-        }
-        x = 0;
-        y++;
-        // std::cout << std::endl;
-    }
+    // Select the scenes in the opposite order they will run.
+    sceneMan.queue("SplashScene");
+    sceneMan.queue("BootScene"); // Boot runs first so it is pushed last.
 }
 
 // -----------------------------------------------------------------
@@ -117,56 +75,15 @@ void update(uint32_t time)
     }
 
     MenuButton.update();
-    HomeButton.update();
-    AButton.update();
-    YButton.update();
-    DPAD_LEFTButton.update();
-    DPAD_RIGHTButton.update();
 
     if (MenuButton.pressed())
     {
         std::cout << "Goodbye World" << std::endl;
+#ifdef TARGET_32BLIT_HW
+        blit::api.exit(false);
+#else
         exit(0);
-    }
-
-    if (HomeButton.tapped())
-    {
-        ship.reset();
-        ship.debug();
-    }
-
-    // -----------------------------------------
-    // Rotate
-    if (DPAD_LEFTButton.pressed())
-    {
-        ship.rotateCCW();
-    }
-    else if (DPAD_RIGHTButton.pressed())
-    {
-        ship.rotateCW();
-    }
-
-    // -----------------------------------------
-    // Thrust
-    // Button::A == "Z" key
-    ship.applyThrust(AButton.pressed());
-
-    if (YButton.tapped())
-    {
-        updateEnabled = !updateEnabled;
-    }
-
-    if (updateEnabled)
-        ship.update(dt, gravity);
-
-    if (ship.hitTripWire())
-        buffer.scroll();
-
-    bool collided = buffer.collide(ship);
-
-    if (ship.isDead())
-    {
-        ship.reset();
+#endif
     }
 
     pTime = time;
@@ -184,12 +101,7 @@ void render(uint32_t time)
     screen.pen = clearColor;
     screen.clear();
 
-    buffer.blit();
-
     sceneMan.render();
-
-
-    ship.render();
 
     uint32_t ms_end = now();
 

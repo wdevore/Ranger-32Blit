@@ -13,4 +13,12 @@ namespace Game
         PlayAgain,
         Exit // Exit back to 32Blit menu
     };
+
+    enum class SceneState
+    {
+        OffStage,
+        Enter,
+        Exit,
+        OnStage
+    };
 } // namespace Game

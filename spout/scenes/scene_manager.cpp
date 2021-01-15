@@ -18,37 +18,60 @@ namespace Game
         // If running scene is null then we need to pop one from the stack to run.
         if (!runningScene)
         {
-            // std::cout << "Popping from stack" << std::endl;
-            bool scenePopped = popScene();
+            bool scenePopped = pop();
             if (scenePopped)
             {
                 std::cout << "Popped '" << runningScene->Name() << "' from stack" << std::endl;
-                runningScene->init();
+                runningScene->EnterScene();
             }
             else
+            {
+                std::cout << "Atleast one Scene must have been queue" << std::endl;
                 return false;
+            }
         }
 
-        bool finished = runningScene->update(time);
+        runningScene->update(time);
 
-        if (finished)
+        switch (runningScene->CurrentState())
+        {
+        case SceneState::Exit:
         {
             std::cout << "Scene '" << runningScene->Name() << "' finished" << std::endl;
+
+            // Before the running scene leaves
+            // check to see if it suggests another scene to queue/run.
+            std::string nextScene = runningScene->NextScene();
+
+            runningScene->ExitScene();
+            runningScene->update(time);
+
             if (!runningScene->shouldDispose())
             {
                 std::cout << "Returning scene '" << runningScene->Name() << "' too pool" << std::endl;
                 pool[runningScene->Name()] = std::move(runningScene);
             }
 
-            bool scenePopped = popScene();
+            if (!nextScene.empty())
+            {
+                std::cout << "Next scene '" << nextScene << "'" << std::endl;
+                queue(nextScene);
+            }
 
-            if (scenePopped)
+            if (pop())
             {
                 std::cout << "Popped another scene '" << runningScene->Name() << "' from stack" << std::endl;
-                runningScene->init();
+                runningScene->EnterScene();
+                return true;
             }
             else
                 return false;
+        }
+        break;
+
+        default:
+            // std::cout << "Unknown scene state" << std::endl;
+            break;
         }
 
         return true;
@@ -57,12 +80,15 @@ namespace Game
     void SceneManager::render()
     {
         if (runningScene)
+        {
+            // std::cout << "Rending running scene" << std::endl;
             runningScene->render();
+        }
     }
 
-    void SceneManager::addScene(std::unique_ptr<Scene> scene)
+    void SceneManager::add(std::unique_ptr<Scene> scene)
     {
-        // std::cout << "SceneManager::addScene" << std::endl;
+        // std::cout << "SceneManager::add" << std::endl;
 
         pool[scene->Name()] = std::move(scene);
 
@@ -73,9 +99,9 @@ namespace Game
         // std::cout << "added B ---------------" << std::endl;
     }
 
-    void SceneManager::pushScene(std::string name)
+    void SceneManager::queue(std::string name)
     {
-        std::cout << "SceneManager::pushScene '" << name << "'" << std::endl;
+        std::cout << "SceneManager::queue '" << name << "'" << std::endl;
 
         stack.push(std::move(pool[name]));
         pool.erase(name);
@@ -87,12 +113,13 @@ namespace Game
         //     std::cout << element.first << std::endl;
     }
 
-    bool SceneManager::popScene()
+    bool SceneManager::pop()
     {
-        std::cout << "SceneManager::popScene" << std::endl;
+        std::cout << "SceneManager::pop" << std::endl;
 
         if (stack.empty())
         {
+            std::cout << "SceneManager::popScene no more scenes" << std::endl;
             return false; // Signal no more scenes to run
         }
 

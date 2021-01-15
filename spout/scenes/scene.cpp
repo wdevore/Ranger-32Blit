@@ -9,13 +9,8 @@ namespace Game
         this->name = name;
     }
 
-    void Scene::init()
+    void Scene::update(uint32_t time)
     {
-    }
-
-    bool Scene::update(uint32_t time)
-    {
-        return true;
     }
 
     void Scene::render()
@@ -27,9 +22,27 @@ namespace Game
         return name;
     }
 
+    void Scene::EnterScene()
+    {
+    }
+
+    void Scene::ExitScene()
+    {
+    }
+
+    std::string Scene::NextScene()
+    {
+        return "";
+    }
+
     bool Scene::shouldDispose()
     {
         return disposeOnExit;
+    }
+
+    SceneState Scene::CurrentState()
+    {
+        return state;
     }
 
     std::string Scene::toString()
