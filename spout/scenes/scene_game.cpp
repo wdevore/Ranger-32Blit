@@ -1,6 +1,8 @@
 #include <iostream>
 
 #include "32blit.hpp"
+
+#include "../game/defines.hpp"
 #include "scene_game.hpp"
 #include "../gui/button.hpp"
 #include "../islands/island_buffer.hpp"
@@ -9,8 +11,8 @@
 
 namespace Game
 {
-    extern Ship ship; // Defined in game.cpp
-    extern Vec2 gravity;
+    Ship ship; // Defined in game.cpp
+    Vec2 gravity = Vec2{0.0, GravityAcceleration};
     extern Pen clearColor;
 
     Game::Button HomeButton(blit::Button::HOME);             // "1" on keyboard
@@ -26,10 +28,11 @@ namespace Game
     // extern std::list<std::unique_ptr<IsLand>> islands;
     extern std::list<std::string> islandMap;
 
-    extern State gameState;
-    extern IslandBuffer buffer;
+    // std::list<std::unique_ptr<IsLand>> islands;
 
-    extern SceneManager sceneMan;
+    State gameState = {State::Boot};
+
+    IslandBuffer buffer;
 
     using namespace blit;
 
