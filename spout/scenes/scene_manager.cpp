@@ -10,7 +10,7 @@ namespace Game
 
     void SceneManager::init()
     {
-        std::cout << "SceneManager::init" << std::endl;
+        // std::cout << "SceneManager::init" << std::endl;
     }
 
     bool SceneManager::update(uint32_t time)
@@ -22,7 +22,7 @@ namespace Game
             if (scenePopped)
             {
                 std::cout << "Popped '" << runningScene->Name() << "' from stack" << std::endl;
-                runningScene->EnterScene();
+                runningScene->enterScene();
             }
             else
             {
@@ -40,10 +40,10 @@ namespace Game
             std::cout << "Scene '" << runningScene->Name() << "' finished" << std::endl;
 
             // Before the running scene leaves
-            // check to see if it suggests another scene to queue/run.
-            std::string nextScene = runningScene->NextScene();
+            // check to see if it recommends another scene to queue/run.
+            std::string nextScene = runningScene->nextScene();
 
-            runningScene->ExitScene();
+            runningScene->exitScene();
             runningScene->update(time);
 
             if (!runningScene->shouldDispose())
@@ -61,7 +61,7 @@ namespace Game
             if (pop())
             {
                 std::cout << "Popped another scene '" << runningScene->Name() << "' from stack" << std::endl;
-                runningScene->EnterScene();
+                runningScene->enterScene();
                 return true;
             }
             else
@@ -88,15 +88,7 @@ namespace Game
 
     void SceneManager::add(std::unique_ptr<Scene> scene)
     {
-        // std::cout << "SceneManager::add" << std::endl;
-
         pool[scene->Name()] = std::move(scene);
-
-        // for (const auto &[name, scn] : pool)  // <-- C++17 syntax
-        // std::cout << "added A ---------------" << std::endl;
-        // for (const auto &element : pool)
-        //     std::cout << element.first << std::endl;
-        // std::cout << "added B ---------------" << std::endl;
     }
 
     void SceneManager::queue(std::string name)
@@ -105,12 +97,6 @@ namespace Game
 
         stack.push(std::move(pool[name]));
         pool.erase(name);
-
-        // std::cout << "~~~~~~~~~~~~~~~" << std::endl;
-        // std::cout << stack.top()->Name() << std::endl;
-        // std::cout << "pool ---------------" << std::endl;
-        // for (const auto &element : pool)
-        //     std::cout << element.first << std::endl;
     }
 
     bool SceneManager::pop()
@@ -123,23 +109,34 @@ namespace Game
             return false; // Signal no more scenes to run
         }
 
-        // std::unique_ptr<Scene> &top = stack.top();
-
-        // Move the scene from the stack back into the pool but only
-        // if the dispose flag is false.
-        // if (!top->shouldDispose())
-        // {
-        //     pool[name] = std::move(top);
-        // }
-
         runningScene = std::move(stack.top());
+
         // Clear scene reference left on stack.
         stack.pop();
 
         return true;
+    }
 
-        // for (const auto &element : pool)
-        //     std::cout << element.first << std::endl;
+    std::string SceneManager::toString()
+    {
+        std::string s;
+        s += "Stack:----------------\n";
+        for (const auto &element : stack)
+        {
+            // std::cout << element->Name() << std::endl;
+            s += element->Name() + "\n";
+        }
+
+        s += "Pool:----------------\n";
+        // for (const auto &[name, scn] : pool)  // <-- C++17 syntax
+        for (const auto &element : pool)
+        {
+            // std::cout << element.first << std::endl;
+            s += element.first + "\n";
+        }
+        s += "-----------------------\n";
+
+        return s;
     }
 
 } // namespace Game

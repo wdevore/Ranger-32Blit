@@ -12,6 +12,8 @@
 #include "scenes/scene_boot.hpp"
 #include "scenes/scene_splash.hpp"
 #include "scenes/scene_game.hpp"
+#include "scenes/scene_exit.hpp"
+#include "scenes/scene_menu.hpp"
 
 using namespace blit;
 
@@ -19,7 +21,7 @@ namespace Game
 {
     Pen clearColor = {200, 200, 200};
 
-    Game::Button MenuButton(blit::Button::MENU); // "2" on keyboard
+    // Game::Button MenuButton(blit::Button::MENU); // "2" on keyboard
     // Button::X = "C" key
 
     uint32_t pTime = 0;
@@ -49,10 +51,16 @@ void init()
     sceneMan.add(std::make_unique<BootScene>("BootScene"));
     sceneMan.add(std::make_unique<SplashScene>("SplashScene"));
     sceneMan.add(std::make_unique<GameScene>("GameScene"));
+    sceneMan.add(std::make_unique<ExitScene>("ExitScene"));
+    sceneMan.add(std::make_unique<MenuScene>("MenuScene"));
+
+    // std::cout << sceneMan.toString() << std::endl;
 
     // Select the scenes in the opposite order they will run.
     sceneMan.queue("SplashScene");
     sceneMan.queue("BootScene"); // Boot runs first so it is pushed last.
+
+    // std::cout << sceneMan.toString() << std::endl;
 }
 
 // -----------------------------------------------------------------
@@ -74,17 +82,17 @@ void update(uint32_t time)
         exit(0);
     }
 
-    MenuButton.update();
+    // MenuButton.update();
 
-    if (MenuButton.pressed())
-    {
-        std::cout << "Goodbye World" << std::endl;
-#ifdef TARGET_32BLIT_HW
-        blit::api.exit(false);
-#else
-        exit(0);
-#endif
-    }
+//     if (MenuButton.pressed())
+//     {
+//         std::cout << "Goodbye World" << std::endl;
+// #ifdef TARGET_32BLIT_HW
+//         blit::api.exit(false);
+// #else
+//         exit(0);
+// #endif
+//     }
 
     pTime = time;
 }

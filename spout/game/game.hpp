@@ -7,6 +7,7 @@ namespace Game
         Boot,      // Misc
         Splash,    // Hello
         Menu,      // Play, Scores, Settings, Quit
+        Selected,    // Marker selection
         EnterPlay, // Prep game
         Play,      // Playing the game
         ExitPlay,  // Player died

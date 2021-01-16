@@ -22,9 +22,9 @@ namespace Game
         virtual void update(uint32_t time) = 0;
         virtual void render();
 
-        virtual void EnterScene();
-        virtual void ExitScene();
-        virtual std::string NextScene();
+        virtual void enterScene();
+        virtual void exitScene();
+        virtual std::string nextScene();
 
         std::string Name();
 

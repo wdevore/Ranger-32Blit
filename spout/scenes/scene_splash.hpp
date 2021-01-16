@@ -11,9 +11,9 @@ namespace Game
         void update(uint32_t time) override;
         void render() override;
 
-        void EnterScene() override;
-        void ExitScene() override;
-        std::string NextScene() override;
+        void enterScene() override;
+        void exitScene() override;
+        std::string nextScene() override;
     };
 
 } // namespace Game

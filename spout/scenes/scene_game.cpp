@@ -15,6 +15,7 @@ namespace Game
     Vec2 gravity = Vec2{0.0, GravityAcceleration};
     extern Pen clearColor;
 
+    Game::Button MenuButton(blit::Button::MENU);             // "2" on keyboard
     Game::Button HomeButton(blit::Button::HOME);             // "1" on keyboard
     Game::Button AButton(blit::Button::A);                   // "Z" on keyboard
     Game::Button YButton(blit::Button::Y);                   // "V" on keyboard
@@ -22,12 +23,9 @@ namespace Game
     Game::Button DPAD_RIGHTButton(blit::Button::DPAD_RIGHT); // "->" or "D" on keyboard.
     // Button::X = "C" key
 
-    // uint32_t pTime = 0;
     bool updateEnabled = true;
 
-    // extern std::list<std::unique_ptr<IsLand>> islands;
     extern std::list<std::string> islandMap;
-
     // std::list<std::unique_ptr<IsLand>> islands;
 
     State gameState = {State::Boot};
@@ -38,17 +36,26 @@ namespace Game
 
     GameScene::GameScene(std::string name) : Scene{name}
     {
-        // We don't want this scene to be thrown out, instead re-pool it.
+        // We don't want this scene to be thrown out when moving to another scene,
+        // instead re-pool it.
         disposeOnExit = false;
     }
 
     void GameScene::update(uint32_t time)
     {
+        MenuButton.update();
         HomeButton.update();
         AButton.update();
         YButton.update();
         DPAD_LEFTButton.update();
         DPAD_RIGHTButton.update();
+
+        if (MenuButton.tapped())
+        {
+            menuRequested = true;
+            // Show menu
+            state = SceneState::Exit; // Signal scene is done and wants to exit
+        }
 
         if (HomeButton.tapped())
         {
@@ -103,13 +110,18 @@ namespace Game
         screen.text("Alt: 0123  ---  Score: 130", minimal_font, Point(5, 4));
     }
 
-    std::string GameScene::NextScene()
+    std::string GameScene::nextScene()
     {
-        return ""; //"MenuScene";
+        if (menuRequested)
+            return "MenuScene";
+        else
+            return "";
     }
 
-    void GameScene::EnterScene()
+    void GameScene::enterScene()
     {
+        menuRequested = false;
+
         ship.init();
 
         buffer.clear();
@@ -134,7 +146,7 @@ namespace Game
         state = SceneState::OnStage; // Immediate transition onto the stage
     }
 
-    void GameScene::ExitScene()
+    void GameScene::exitScene()
     {
     }
 

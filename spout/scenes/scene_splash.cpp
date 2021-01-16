@@ -41,19 +41,19 @@ namespace Game
         screen.text("Splash", minimal_font, Point(5, screen.bounds.h / 2 + 4));
     }
 
-    std::string SplashScene::NextScene()
+    std::string SplashScene::nextScene()
     {
-        return "GameScene";
+        return "MenuScene";
     }
 
-    void SplashScene::EnterScene()
+    void SplashScene::enterScene()
     {
         duration = 500; // 1 seconds
         durationCnt = 0;
         state = SceneState::OnStage; // Immediate transition onto the stage
     }
 
-    void SplashScene::ExitScene()
+    void SplashScene::exitScene()
     {
     }
 

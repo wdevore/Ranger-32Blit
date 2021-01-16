@@ -22,15 +22,15 @@ namespace Game
         return name;
     }
 
-    void Scene::EnterScene()
+    void Scene::enterScene()
     {
     }
 
-    void Scene::ExitScene()
+    void Scene::exitScene()
     {
     }
 
-    std::string Scene::NextScene()
+    std::string Scene::nextScene()
     {
         return "";
     }

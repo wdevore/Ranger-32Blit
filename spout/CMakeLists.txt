@@ -48,6 +48,10 @@ blit_executable (${PROJECT_NAME}
     scenes/scene_boot.cpp
     scenes/scene_splash.hpp
     scenes/scene_splash.cpp
+    scenes/scene_exit.hpp
+    scenes/scene_exit.cpp
+    scenes/scene_menu.hpp
+    scenes/scene_menu.cpp
     scenes/scene_game.hpp
     scenes/scene_game.cpp
     )
