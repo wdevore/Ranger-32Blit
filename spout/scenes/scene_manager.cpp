@@ -21,7 +21,7 @@ namespace Game
             bool scenePopped = pop();
             if (scenePopped)
             {
-                std::cout << "Popped '" << runningScene->Name() << "' from stack" << std::endl;
+                // std::cout << "Popped '" << runningScene->Name() << "' from stack" << std::endl;
                 runningScene->enterScene();
             }
             else
@@ -37,7 +37,7 @@ namespace Game
         {
         case SceneState::Exit:
         {
-            std::cout << "Scene '" << runningScene->Name() << "' finished" << std::endl;
+            // std::cout << "Scene '" << runningScene->Name() << "' finished" << std::endl;
 
             // Before the running scene leaves
             // check to see if it recommends another scene to queue/run.
@@ -48,19 +48,19 @@ namespace Game
 
             if (!runningScene->shouldDispose())
             {
-                std::cout << "Returning scene '" << runningScene->Name() << "' too pool" << std::endl;
+                // std::cout << "Returning scene '" << runningScene->Name() << "' too pool" << std::endl;
                 pool[runningScene->Name()] = std::move(runningScene);
             }
 
             if (!nextScene.empty())
             {
-                std::cout << "Next scene '" << nextScene << "'" << std::endl;
+                // std::cout << "Next scene '" << nextScene << "'" << std::endl;
                 queue(nextScene);
             }
 
             if (pop())
             {
-                std::cout << "Popped another scene '" << runningScene->Name() << "' from stack" << std::endl;
+                // std::cout << "Popped another scene '" << runningScene->Name() << "' from stack" << std::endl;
                 runningScene->enterScene();
                 return true;
             }
@@ -93,7 +93,7 @@ namespace Game
 
     void SceneManager::queue(std::string name)
     {
-        std::cout << "SceneManager::queue '" << name << "'" << std::endl;
+        // std::cout << "SceneManager::queue '" << name << "'" << std::endl;
 
         stack.push(std::move(pool[name]));
         pool.erase(name);
@@ -101,7 +101,7 @@ namespace Game
 
     bool SceneManager::pop()
     {
-        std::cout << "SceneManager::pop" << std::endl;
+        // std::cout << "SceneManager::pop" << std::endl;
 
         if (stack.empty())
         {

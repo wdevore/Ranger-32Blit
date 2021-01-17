@@ -6,6 +6,8 @@
 
 namespace Game
 {
+    const int MaxExplosionParticles = 100;
+
     const int MaxThrustParticles = 150;
     const float MaxUpwardVelocity = 0.2;
     const float MaxDownwardVelocity = 0.3;

@@ -22,4 +22,10 @@ namespace Game
         screen.pen = color;
         screen.circle(position, 3);
     }
+
+    void ParticleCircle::setColor(Pen color)
+    {
+        this->color = color;
+    }
+
 } // namespace Game

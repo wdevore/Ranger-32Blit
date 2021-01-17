@@ -42,7 +42,7 @@ namespace Game
 
     void BootScene::enterScene()
     {
-        duration = 500; // 0.5 seconds
+        duration = 100; // 0.5 seconds
         durationCnt = 0;
         state = SceneState::OnStage; // Immediate transition onto the stage
     }

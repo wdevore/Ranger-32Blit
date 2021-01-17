@@ -21,7 +21,7 @@ namespace Game
 {
     Pen clearColor = {200, 200, 200};
 
-    // Game::Button MenuButton(blit::Button::MENU); // "2" on keyboard
+    Game::Button MenuButton(blit::Button::MENU); // "2" on keyboard
     // Button::X = "C" key
 
     uint32_t pTime = 0;
@@ -82,17 +82,17 @@ void update(uint32_t time)
         exit(0);
     }
 
-    // MenuButton.update();
+    MenuButton.update();
 
-//     if (MenuButton.pressed())
-//     {
-//         std::cout << "Goodbye World" << std::endl;
-// #ifdef TARGET_32BLIT_HW
-//         blit::api.exit(false);
-// #else
-//         exit(0);
-// #endif
-//     }
+    if (MenuButton.pressed())
+    {
+        std::cout << "Goodbye World" << std::endl;
+#ifdef TARGET_32BLIT_HW
+        blit::api.exit(false);
+#else
+        exit(0);
+#endif
+    }
 
     pTime = time;
 }

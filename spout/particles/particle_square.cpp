@@ -62,4 +62,10 @@ namespace Game
 
         screen.rectangle(body);
     }
+
+    void ParticleSquare::setColor(Pen color)
+    {
+        this->color = color;
+    }
+
 } // namespace Game

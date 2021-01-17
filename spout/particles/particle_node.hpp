@@ -35,7 +35,9 @@ namespace Game
         void addForce(const Vec2 &force);
 
         virtual void update(uint32_t time) = 0;
-        virtual void render() = 0;
+        virtual void render();
+
+        virtual void setColor(Pen color) = 0;
 
         void setCollided(bool collide);
         

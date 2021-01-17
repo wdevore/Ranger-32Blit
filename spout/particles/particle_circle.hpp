@@ -15,5 +15,7 @@ namespace Game
         // ParticleNode has implementations for them.
         void update(uint32_t time) override;
         void render() override;
+
+        void setColor(Pen color) override;
     };
 } // namespace Game

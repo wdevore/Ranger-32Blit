@@ -124,7 +124,6 @@ namespace Game
         // Ship explodes if it falls below the bottom.
         if (position.y > screen.bounds.h)
         {
-            // std::cout << "BOOM!" << std::endl;
             died = true;
         }
 
@@ -181,6 +180,7 @@ namespace Game
     void Ship::setCollided(bool collide)
     {
         this->collide = collide;
+        died = collide;
     }
 
     bool Ship::isDead()
