@@ -6,11 +6,8 @@ namespace Game
     class ActivatorArc : public ParticleActivator
     {
     private:
-        float minLife;
         float minAngularVelocity;
         float maxAngularVelocity;
-        float minForce;
-        float maxForce;
 
     public:
         ActivatorArc();

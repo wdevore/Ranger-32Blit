@@ -12,6 +12,8 @@ namespace Game
         Play,      // Playing the game
         ExitPlay,  // Player died
         PlayAgain,
+        Scores,
+        About,
         Exit // Exit back to 32Blit menu
     };
 

@@ -48,7 +48,7 @@ namespace Game
 
     void ExitScene::enterScene()
     {
-        duration = 100;
+        duration = 2000;
         durationCnt = 0;
         state = SceneState::OnStage; // Immediate transition onto the stage
     }

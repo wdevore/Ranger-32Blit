@@ -20,6 +20,8 @@ namespace Game
 
         bool pressed();
         bool released();
+
+        void reset();
     };
 
 } // namespace Game

@@ -40,4 +40,9 @@ namespace Game
         return keyPressed;
     }
 
+    void Game::Button::reset()
+    {
+        keyPressed = false;
+    }
+
 } // namespace Game

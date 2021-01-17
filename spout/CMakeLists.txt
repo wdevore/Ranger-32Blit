@@ -54,6 +54,10 @@ blit_executable (${PROJECT_NAME}
     scenes/scene_menu.cpp
     scenes/scene_game.hpp
     scenes/scene_game.cpp
+    scenes/scene_about.hpp
+    scenes/scene_about.cpp
+    scenes/scene_scores.hpp
+    scenes/scene_scores.cpp
     )
     
 blit_metadata (${PROJECT_NAME} metadata.yml)

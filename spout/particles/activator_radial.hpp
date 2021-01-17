@@ -7,7 +7,7 @@ namespace Game
     class ActivatorRadial : public ParticleActivator
     {
     public:
-        ActivatorRadial() = default;
+        ActivatorRadial() ;
 
         void activate(std::unique_ptr<ParticleNode> &particle, Vec2 &center) override;
     };

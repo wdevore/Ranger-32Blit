@@ -40,5 +40,7 @@ namespace Game
         void triggerOneShot(std::unique_ptr<ParticleActivator> &activator);
         void triggerAt();
         void triggerExplosion(std::unique_ptr<ParticleActivator> &activator);
+
+        void reset();
     };
 } // namespace Game

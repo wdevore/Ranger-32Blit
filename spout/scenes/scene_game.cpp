@@ -19,6 +19,7 @@ namespace Game
         disposeOnExit = false;
 
         activator = std::make_unique<ActivatorArc>();
+        activator->setMaxLifetime(10);
 
         // Set up thrust particles
         for (size_t i = 0; i < MaxExplosionParticles; i++)
@@ -80,6 +81,7 @@ namespace Game
         menuRequested = false;
         gameState = State::Play;
         explodeCnt = 0;
+        markerP = markerPlayAgain;
 
         ship.init();
 
@@ -182,6 +184,9 @@ namespace Game
 
             // ship.reset();
             gameState = State::ExitPlay;
+            // When we switch states the button could still be pressed which would
+            // trigger the resultant menu inadvertantly. So we artifically release it.
+            AButton.reset();
 
             ps.setPosition(ship.posX(), ship.posY() - 1);
             ps.triggerExplosion(activator);
@@ -298,4 +303,3 @@ namespace Game
     }
 
 } // namespace Game
-;

@@ -14,6 +14,8 @@
 #include "scenes/scene_game.hpp"
 #include "scenes/scene_exit.hpp"
 #include "scenes/scene_menu.hpp"
+#include "scenes/scene_about.hpp"
+#include "scenes/scene_scores.hpp"
 
 using namespace blit;
 
@@ -53,6 +55,8 @@ void init()
     sceneMan.add(std::make_unique<GameScene>("GameScene"));
     sceneMan.add(std::make_unique<ExitScene>("ExitScene"));
     sceneMan.add(std::make_unique<MenuScene>("MenuScene"));
+    sceneMan.add(std::make_unique<AboutScene>("AboutScene"));
+    sceneMan.add(std::make_unique<ScoresScene>("ScoresScene"));
 
     // std::cout << sceneMan.toString() << std::endl;
 

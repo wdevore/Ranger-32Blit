@@ -51,6 +51,7 @@ namespace Game
         position.y = screen.bounds.h / 2;
         velocity.x = 0.0;
         velocity.y = 0.0;
+        ps.reset();
     }
 
     void Ship::rotateCW()

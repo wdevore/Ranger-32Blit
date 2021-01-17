@@ -15,7 +15,10 @@ namespace Game
         float endAngle;
         float minSpeed;
         float maxSpeed;
+        float minLife;
         float maxLife;
+        float minForce;
+        float maxForce;
 
     public:
         ParticleActivator();

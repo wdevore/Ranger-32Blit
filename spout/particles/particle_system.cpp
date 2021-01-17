@@ -103,7 +103,6 @@ namespace Game
         {
             if (!p->isActive())
             {
-                // std::cout << "triggerOneShot activate: " << p->toString() << std::endl;
                 activator->activate(p, epiCenter);
                 break;
             }
@@ -121,4 +120,11 @@ namespace Game
         for (auto &p : particles)
             activator->activate(p, epiCenter);
     }
+
+    void ParticleSystem::reset()
+    {
+        for (auto &p : particles)
+            p->reset();
+    }
+
 } // namespace Game
