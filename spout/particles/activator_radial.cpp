@@ -4,6 +4,8 @@
 
 namespace Game
 {
+    extern float randF();
+
     ActivatorRadial::ActivatorRadial()
     {
         minLife = 2.0;
@@ -16,8 +18,8 @@ namespace Game
     {
         ParticleActivator::activate(particle, center);
 
-        float direction = 360.0 * drand48();
-        float speed = minSpeed + maxSpeed * drand48();
+        float direction = 360.0 * randF();
+        float speed = minSpeed + maxSpeed * randF();
         // std::cout << "direction: " << direction << ", speed: " << speed << std::endl;
 
         particle->setVelocity(direction, speed);

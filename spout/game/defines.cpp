@@ -31,4 +31,8 @@ namespace Game
         return min * (1.0 - t) + max * t;
     }
 
+    float randF() {
+        return float(rand()) / float(RAND_MAX);
+    }
+
 } // namespace Game

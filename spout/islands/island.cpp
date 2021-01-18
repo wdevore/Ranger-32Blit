@@ -5,6 +5,8 @@
 
 namespace Game
 {
+    extern float randF();
+
     IsLand::IsLand(int id)
     {
         this->id = id;
@@ -40,7 +42,7 @@ namespace Game
     void IsLand::reset()
     {
         // Configure for another island by generating new values.
-        height = 3 + int(drand48() * 10);
+        height = 3 + int(randF() * 10);
 
         shiftRate.adjust();
     }

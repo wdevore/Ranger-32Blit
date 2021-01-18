@@ -45,6 +45,8 @@ namespace Game
         int32_t markerNoWay = 32;
         int32_t markerP = markerPlayAgain;
 
+        int32_t altitude = 0;
+        
         void update_play(uint32_t time);
         void render_play();
 

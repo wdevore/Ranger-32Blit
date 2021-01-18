@@ -1,7 +1,8 @@
 # Ranger-32Blit
 
 # Building
-If you want to build a version for the device then specify a toolchain, which in this case is **32blit.toolchain**.
+If you want to build a version for the device then specify a toolchain, which in this case is **32blit.toolchain**, make sure you remove any cached build files first. See cleaning section.
+
 ```
 > cmake . -D32BLIT_PATH="../../32blit-beta" -DCMAKE_TOOLCHAIN_FILE="../../32blit-beta/32blit.toolchain"
 ```
@@ -15,7 +16,26 @@ Now you can run make to compile.
 ```
 > make
 OR
-> make -j4; spout
+> make -j8; spout
+```
+
+# Cleaning
+From within your project directory, remove these directories and files **before** running *cmake*:
+
+```
+
+rm -rf 32blit
+rm -rf CMakeFiles
+rm cmake_install.cmake
+rm CMakeCache.txt
+rm metadata.cmake
+rm spout
+rm spout.blit
+rm spout.elf
+rm spout.hex
+rm spout.bin
+rm spout.map
+
 ```
 
 # Example CMakeLists.txt(s)

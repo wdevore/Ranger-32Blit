@@ -5,6 +5,8 @@
 
 namespace Game
 {
+    extern float randF();
+
     ActivatorArc::ActivatorArc()
     {
         minLife = 2.0;
@@ -22,8 +24,8 @@ namespace Game
         ParticleActivator::activate(particle, center);
         // std::cout << "startAngle: " << startAngle << ", endAngle: " << endAngle << std::endl;
 
-        float direction = Game::lerp(startAngle, endAngle, drand48());
-        float speed = minSpeed + maxSpeed * drand48();
+        float direction = Game::lerp(startAngle, endAngle, randF());
+        float speed = minSpeed + maxSpeed * randF();
 
         particle->setVelocity(direction, speed);
     }

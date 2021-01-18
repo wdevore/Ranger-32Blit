@@ -10,6 +10,8 @@ using namespace blit;
 
 namespace Game
 {
+    extern float randF();
+
     ParticleActivator::ParticleActivator()
     {
         using namespace Game;
@@ -23,7 +25,7 @@ namespace Game
         particle->setPosition(center.x, center.y);
 
         // A random lifetime ranging from 0.0 to max_life
-        float lifespan = drand48() * maxLife * 1000.0;
+        float lifespan = randF() * maxLife * 1000.0;
         // std::cout << "lifespan: " << lifespan << std::endl;
 
         particle->setLifeSpan(lifespan);

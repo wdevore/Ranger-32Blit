@@ -39,7 +39,8 @@ namespace Game
 // -----------------------------------------------------------------
 void init()
 {
-    drand48(); // Nudge the RNG
+    //drand48(); // Nudge the RNG
+    rand();
 
     set_screen_mode(ScreenMode::hires);
 

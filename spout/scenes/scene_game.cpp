@@ -258,6 +258,7 @@ namespace Game
             {
                 ship.reset();
                 gameState = State::Play;
+                altitude = 0;
             }
             else
             {

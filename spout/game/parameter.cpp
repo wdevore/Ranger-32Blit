@@ -5,6 +5,8 @@
 
 namespace Game
 {
+    extern float randF();
+
     Parameter::Parameter(float min, float max, float probChgMin, float probChgMax)
     {
         this->min = min;
@@ -17,11 +19,11 @@ namespace Game
 
     void Parameter::adjust()
     {
-        float n = drand48();
+        float n = randF();
         if (n > probChgMin && n < probChgMax)
         {
-            _value = int(lerp(min, max, drand48()));
-            chgCnt = 1 + int(drand48() * 10);
+            _value = int(lerp(min, max, randF()));
+            chgCnt = 1 + int(randF() * 10);
             cnt = 0;
         }
         // std::cout << _value << "," << chgCnt << std::endl;
@@ -50,4 +52,3 @@ namespace Game
     }
 
 } // namespace Game
-
