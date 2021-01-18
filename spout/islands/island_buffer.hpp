@@ -23,7 +23,7 @@ namespace Game
         //
         //             col  row
         uint8_t buffer[320][240]{};
-        Pen colorSet = {0, 0, 0};
+        Pen colorSet = {64, 64, 64};
         Point p;
 
     public:

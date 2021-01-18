@@ -8,7 +8,7 @@
 
 namespace Game
 {
-    extern std::list<std::string> islandMap;
+    extern std::vector<std::list<std::string>> islandMaps;
 
     using namespace blit;
 
@@ -87,15 +87,15 @@ namespace Game
 
         buffer.clear();
 
-        int xoff = 100;
-        int yoff = 100;
+        int xoff = 50;
+        int yoff = 50;
         int x = 0;
         int y = 0;
-        for (auto &row : Game::islandMap)
+        for (auto &row : Game::islandMaps[3])
         {
             for (auto &c : row)
             {
-                if (c == '1')
+                if (c == 'o')
                     buffer.setPixel(x + xoff, y + yoff);
                 // std::cout << c;
                 x++;

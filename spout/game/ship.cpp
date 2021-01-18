@@ -27,9 +27,7 @@ namespace Game
 
         // Set up thrust particles
         for (size_t i = 0; i < MaxThrustParticles; i++)
-        {
             ps.addParticle(std::make_unique<ParticleSquare>(i));
-        }
     }
 
     void Ship::destroy()

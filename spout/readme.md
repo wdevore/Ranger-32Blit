@@ -17,8 +17,8 @@ The ship is a simple circle with a stick for the engine. Thrust particles intera
 * **Done** Particle system
 * **Done** Collisions. Upon death show dialog to "Play again" or "Not".
   * **Done** Particles to walls (bounces off)
-  * Ship to floor (touches explodes)
-  * **Working** Ship to obstacles (touches explodes)
+  * **Done** Ship to floor (touches explodes)
+  * **Done** Ship to obstacles (touches explodes)
 * **Done** Ship Rotation
 * Islands
   * Scrolling
@@ -26,7 +26,6 @@ The ship is a simple circle with a stick for the engine. Thrust particles intera
   * (*Optional*) Simple vertical chaser appears at random.
 * Menu system
   * Animation transitions
-* Score and Atltitude
 * Scenes
   * **Done** Boot
   * **Done** Splash
@@ -35,7 +34,7 @@ The ship is a simple circle with a stick for the engine. Thrust particles intera
   * Game scene
     * Start game. Initial islands scroll into view.
   * Score board scene
-  * About scene
+  * **Done** About scene
 
 ## Notes
 When the game round first starts about a third of the display is pre-scrolled into view.
