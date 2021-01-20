@@ -8,7 +8,7 @@
 
 namespace Game
 {
-    extern std::vector<std::list<std::string>> islandMaps;
+    extern float randF();
 
     using namespace blit;
 
@@ -21,7 +21,7 @@ namespace Game
         activator = std::make_unique<ActivatorArc>();
         activator->setMaxLifetime(10);
 
-        // Set up thrust particles
+        // Set up explosion particles
         for (size_t i = 0; i < MaxExplosionParticles; i++)
         {
             auto p = std::make_unique<ParticleSquare>(i);
@@ -61,6 +61,9 @@ namespace Game
             break;
         case State::PlayAgain:
             render_dialogPlayAgain();
+            DPAD_LEFTButton.reset();
+            DPAD_RIGHTButton.reset();
+            AButton.reset();
             break;
 
         default:
@@ -87,23 +90,8 @@ namespace Game
 
         buffer.clear();
 
-        int xoff = 50;
-        int yoff = 50;
-        int x = 0;
-        int y = 0;
-        for (auto &row : Game::islandMaps[3])
-        {
-            for (auto &c : row)
-            {
-                if (c == 'o')
-                    buffer.setPixel(x + xoff, y + yoff);
-                // std::cout << c;
-                x++;
-            }
-            x = 0;
-            y++;
-            // std::cout << std::endl;
-        }
+        islands.reset(3);
+
         state = SceneState::OnStage; // Immediate transition onto the stage
     }
 
@@ -119,13 +107,6 @@ namespace Game
             menuRequested = true;
             // Show menu
             state = SceneState::Exit; // Signal scene is done and wants to exit
-        }
-
-        HomeButton.update();
-        if (HomeButton.tapped())
-        {
-            ship.reset();
-            ship.debug();
         }
 
         // -----------------------------------------
@@ -162,7 +143,7 @@ namespace Game
         // -----------------------------------------
         // Scrolling
         if (ship.hitTripWire())
-            buffer.scroll();
+            islands.update(time, buffer);
 
         // -----------------------------------------
         // Collision

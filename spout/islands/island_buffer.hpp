@@ -1,3 +1,5 @@
+#pragma once
+
 #include "32blit.hpp"
 
 #include "../game/ship.hpp"
@@ -25,7 +27,7 @@ namespace Game
         uint8_t buffer[320][240]{};
         Pen colorSet = {64, 64, 64};
         Point p;
-
+        
     public:
         IslandBuffer();
 
@@ -34,6 +36,7 @@ namespace Game
         void clearPixel(int x, int y);
 
         void scroll();
+        void clearLine(int line);
         void clear();
         void blit();
 

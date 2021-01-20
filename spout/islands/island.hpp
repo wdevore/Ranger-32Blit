@@ -1,49 +1,38 @@
+#pragma once
+
+#include <list>
+
 #include "32blit.hpp"
+#include "island_buffer.hpp"
 
 using namespace blit;
 
-#include "../game/parameter.hpp"
+// An island scrolls in from the top of the display.
+// It begins to appears when the off screen distance reaches zero.
 
 namespace Game
 {
     class IsLand
     {
     private:
-        int id;
+        // int mapIdx = 0;
+
         Pen color = {64, 64, 64};
-        // Bounding dimensions
-        int width;
+        bool scrolling = false;
+        int heightCnt;
         int height;
-        int hCnt;
 
-        // Line Parameters:
-        Parameter shiftRate = {1, 1, 0.2, 0.3}; // How fast the line shifts Left or Right
-
-        int shiftDuration;  // How long the line is allowed to shift. -1 = No shift
-        Parameter shiftGap; // How long between and changes
-        int shiftRange;     // How far, in either direction, shifting can go. Reletive to center.
-
-        int leftPointRate;     // How fast the end point shifts
-        int leftPointDuration; // How long the point is allowed to shift.
-        int leftGap;           // How long between and changes
-        int leftRange;         // How far, in either direction = Min/Max
-
-        int rightPointRate;     // How fast the end point shifts
-        int rightPointDuration; // How long the point is allowed to shift.
-        int rightGap;           // How long between and changes
-        int rightRange;         // How far, in either direction
-
-        bool _scroll = false;
+        int distanceToView = 0;
+        int xoffset = 50;
+        std::list<std::string> map;
+        std::list<std::string>::reverse_iterator rIter;
 
     public:
-        IsLand() = default;
-        IsLand(int id);
+        IsLand(std::list<std::string>);
 
-        void scroll();
         void reset();
 
-        void update(uint32_t time);
-        void render();
+        void update(uint32_t time, IslandBuffer &buffer);
     };
 
 } // namespace Game

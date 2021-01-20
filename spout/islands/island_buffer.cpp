@@ -24,11 +24,30 @@ namespace Game
 
     void IslandBuffer::setPixel(int x, int y)
     {
+        if (x < 0)
+            x = 0;
+        else if (x > 319)
+            x = 319;
+
+        if (y < 0)
+            y = 0;
+        else if (y > 239)
+            y = 239;
+
         buffer[x][y] = 1;
     }
 
     void IslandBuffer::clearPixel(int x, int y)
     {
+        if (x < 0)
+            x = 0;
+        else if (x > 319)
+            x = 319;
+
+        if (y < 0)
+            y = 0;
+        else if (y > 239)
+            y = 239;
         buffer[x][y] = 0;
     }
 
@@ -40,6 +59,14 @@ namespace Game
             {
                 buffer[col][row] = buffer[col][row - 1];
             }
+        }
+    }
+
+    void IslandBuffer::clearLine(int line)
+    {
+        for (int col = 0; col < screen.bounds.w; col++)
+        {
+            buffer[col][line] = 0;
         }
     }
 

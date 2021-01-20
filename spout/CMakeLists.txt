@@ -37,6 +37,8 @@ blit_executable (${PROJECT_NAME}
     particles/activator_radial.cpp
     islands/island.hpp
     islands/island.cpp
+    islands/islands.hpp
+    islands/islands.cpp
     islands/island_buffer.hpp
     islands/island_buffer.cpp
     islands/island_maps.cpp

@@ -7,7 +7,7 @@ The ship is a simple circle with a stick for the engine. Thrust particles intera
 
 # Build
 ```
-> make -j4; spout
+> make -j8; spout
 ```
 
 # Tasks

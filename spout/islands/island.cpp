@@ -1,49 +1,81 @@
 #include <iostream>
+#include <vector>
 
 #include "../game/defines.hpp"
 #include "island.hpp"
 
+// An island moves closer to the view start position.
+// Once it has done so the island is scrolled into view until the
+// last line is scrolled.
+
 namespace Game
 {
     extern float randF();
+    extern float lerp(float min, float max, float t);
 
-    IsLand::IsLand(int id)
+    IsLand::IsLand(std::list<std::string> map)
     {
-        this->id = id;
+        this->map = map;
+        height = map.size();
+        reset();
     }
 
-    void IsLand::scroll()
+    void IsLand::update(uint32_t time, IslandBuffer &buffer)
     {
-        // It's time to generate a new row of "pixels"
+        buffer.scroll();
+        // Clear top line from previous scroll
+        buffer.clearLine(0);
 
-        // std::cout << "scrolling (" << id << ")" << std::endl;
-        _scroll = true;
-        shiftRate.adjust();
-    }
-
-    void IsLand::update(uint32_t time)
-    {
-        if (hCnt >= height)
+        if (scrolling)
         {
-            reset();
-            hCnt = 0;
-            return;
+            if (rIter == map.rend())
+            {
+                // std::cout << "island totally visible" << std::endl;
+                // All lines have been copied into view
+                scrolling = false;
+                heightCnt = 0;
+                reset();
+            }
+            else
+            {
+                // Copy a line from island map.
+                std::string line = *rIter;
+                // std::cout << "line: " << line << std::endl;
+                // position the line horizontally
+                int x = 0;
+                for (auto &c : line)
+                {
+                    if (c == 'o')
+                        buffer.setPixel(x + xoffset, 0);
+                    x++;
+                }
+
+                ++rIter;
+            }
         }
-
-        shiftRate.update();
-        // std::cout << shiftRate.iValue();
-        hCnt++;
-    }
-
-    void IsLand::render()
-    {
+        else
+        {
+            // Currently the map is being "moved" closer to the view edge.
+            if (distanceToView == 0)
+            {
+                // std::cout << "scrolling ready" << std::endl;
+                // Now we are ready to start scrolling the map into view.
+                scrolling = true;
+                // Get an iterator that is positioned at the bottom of the island
+                // because it is the bottom that appears first at the top of the screen.
+                rIter = map.rbegin();
+            }
+            distanceToView--;
+        }
     }
 
     void IsLand::reset()
     {
-        // Configure for another island by generating new values.
-        height = 3 + int(randF() * 10);
+        // generate new distance
+        distanceToView = int(lerp(50, 100, randF()));
 
-        shiftRate.adjust();
+        // generate horizontal offset
+        xoffset = int(lerp(0, screen.bounds.w, randF()));
+        // std::cout << "distanceToView: " << distanceToView << ", " << xoffset << std::endl;
     }
 } // namespace Game

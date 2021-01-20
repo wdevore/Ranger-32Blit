@@ -11,7 +11,7 @@ namespace Game
     const int MaxThrustParticles = 150;
     const float MaxUpwardVelocity = 0.2;
     const float MaxDownwardVelocity = 0.3;
-    const float GravityAcceleration = 0.00075;
+    const float GravityAcceleration = 0.00055;
     const float RotationalRate = 1.5;   // How fast the ship rotates
 
     const float Pi = 3.1415926535897932384626433;

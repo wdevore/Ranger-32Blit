@@ -11,7 +11,8 @@
 
 namespace Game
 {
-    extern std::list<std::unique_ptr<IsLand>> islands;
+    // extern std::list<std::unique_ptr<IsLand>> islands;
+    extern float randF();
 
     void Ship::init()
     {
@@ -27,7 +28,12 @@ namespace Game
 
         // Set up thrust particles
         for (size_t i = 0; i < MaxThrustParticles; i++)
-            ps.addParticle(std::make_unique<ParticleSquare>(i));
+        {
+            int c = int(lerp(0, 255, randF()));
+            auto p = std::make_unique<ParticleSquare>(i);
+            p->setColor(Pen(c, c, c));
+            ps.addParticle(std::move(p));
+        }
     }
 
     void Ship::destroy()
@@ -49,6 +55,10 @@ namespace Game
         position.y = screen.bounds.h / 2;
         velocity.x = 0.0;
         velocity.y = 0.0;
+        direction.x = 0.0;
+        direction.y = 0.0;
+        rotational_velocity = 0.0;
+
         ps.reset();
     }
 
@@ -96,7 +106,6 @@ namespace Game
             velocity.y = MaxDownwardVelocity;
         if (velocity.y < -MaxUpwardVelocity)
             velocity.y = -MaxUpwardVelocity;
-        // std::cout << velocity.y << std::endl;
 
         // Update position based on velocity
         position += velocity;
@@ -104,7 +113,6 @@ namespace Game
         // Update angular speed
         rotational_velocity *= ShipRotationalDeceleration;
         rotation += rotational_velocity;
-
         activator->setStartAngle(rotation + (DegreeToRadians * 5.0) + (DegreeToRadians * 180.0));
         activator->setEndAngle(rotation - (DegreeToRadians * 5.0) + (DegreeToRadians * 180.0));
 

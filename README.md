@@ -37,6 +37,10 @@ rm spout.bin
 rm spout.map
 
 ```
+OR
+```
+clean.sh
+```
 
 # Example CMakeLists.txt(s)
 ```
