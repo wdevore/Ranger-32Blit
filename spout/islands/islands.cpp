@@ -11,6 +11,10 @@ namespace Game
 
     void IsLands::update(uint32_t time, IslandBuffer &buffer)
     {
+        buffer.scroll();
+        // Clear top line from previous scroll
+        buffer.clearLine(0);
+
         for (auto &island : islands)
         {
             island.update(time, buffer);
@@ -21,31 +25,17 @@ namespace Game
     {
     }
 
-    void IsLands::reset(int seed)
+    void IsLands::init(int seed)
     {
+        int idx = 0;
         for (auto &island : islandMaps)
         {
-            IsLand isl(islandMaps[seed]);
+            IsLand isl(islandMaps[idx]);
             islands.push_back(isl);
-            break;
+            idx++;
+            // break;
         }
 
         islandMaps.clear();
-
-        // int xoff = 50;
-        // int yoff = 50;
-        // int x = 0;
-        // int y = 0;
-        // for (auto &row : Game::islandMaps[3])
-        // {
-        //     for (auto &c : row)
-        //     {
-        //         if (c == 'o')
-        //             buffer.setPixel(x + xoff, y + yoff);
-        //         x++;
-        //     }
-        //     x = 0;
-        //     y++;
-        // }
     }
 } // namespace Game

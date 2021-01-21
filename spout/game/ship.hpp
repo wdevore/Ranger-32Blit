@@ -37,6 +37,7 @@ namespace Game
         ParticleSystem ps;
         std::unique_ptr<ParticleActivator> activator;
 
+        int score = 0;
         bool tripped = false;
         bool collide = false;
         bool died = false;
@@ -63,6 +64,9 @@ namespace Game
 
         float posX();
         float posY();
+
+        int Score();
+        void addToScore(int value);
 
         void setCollided(bool collide);
         ParticleSystem& particleThrust();

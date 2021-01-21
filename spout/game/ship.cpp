@@ -58,8 +58,19 @@ namespace Game
         direction.x = 0.0;
         direction.y = 0.0;
         rotational_velocity = 0.0;
+        score = 0;
 
         ps.reset();
+    }
+
+    int Ship::Score()
+    {
+        return score;
+    }
+
+    void Ship::addToScore(int value)
+    {
+        score += value;
     }
 
     void Ship::rotateCW()
@@ -117,16 +128,9 @@ namespace Game
         activator->setEndAngle(rotation - (DegreeToRadians * 5.0) + (DegreeToRadians * 180.0));
 
         // Check for scrolling
-
-        if (position.y < Spout_ScrollLine)
-        {
+        tripped = position.y < Spout_ScrollLine;
+        if (tripped)
             position.y = Spout_ScrollLine + 0.5;
-            tripped = true;
-        }
-        else
-        {
-            tripped = false;
-        }
 
         // Ship explodes if it falls below the bottom.
         if (position.y > screen.bounds.h)

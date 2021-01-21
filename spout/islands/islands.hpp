@@ -18,7 +18,7 @@ namespace Game
 
         void update(uint32_t time, IslandBuffer& buffer);
 
-        void reset(int seed);
+        void init(int seed);
 
         void render();
     };

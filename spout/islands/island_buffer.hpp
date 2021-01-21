@@ -27,7 +27,7 @@ namespace Game
         uint8_t buffer[320][240]{};
         Pen colorSet = {64, 64, 64};
         Point p;
-        
+
     public:
         IslandBuffer();
 
@@ -40,9 +40,10 @@ namespace Game
         void clear();
         void blit();
 
+        void clip(int &x, int &y);
         bool collide(Ship &ship);
         bool collide(int x, int y);
-        bool collide(ParticleSystem &ps);
+        int collide(ParticleSystem &ps);
         bool collide(std::unique_ptr<ParticleNode> &p);
     };
 

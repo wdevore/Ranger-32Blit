@@ -17,6 +17,8 @@ namespace Game
         int col = 0;
         for (auto &c : cols)
         {
+            clip(col, row);
+
             buffer[col][row] = c;
             col++;
         }
@@ -24,30 +26,13 @@ namespace Game
 
     void IslandBuffer::setPixel(int x, int y)
     {
-        if (x < 0)
-            x = 0;
-        else if (x > 319)
-            x = 319;
-
-        if (y < 0)
-            y = 0;
-        else if (y > 239)
-            y = 239;
-
+        clip(x, y);
         buffer[x][y] = 1;
     }
 
     void IslandBuffer::clearPixel(int x, int y)
     {
-        if (x < 0)
-            x = 0;
-        else if (x > 319)
-            x = 319;
-
-        if (y < 0)
-            y = 0;
-        else if (y > 239)
-            y = 239;
+        clip(x, y);
         buffer[x][y] = 0;
     }
 
@@ -98,6 +83,19 @@ namespace Game
         }
     }
 
+    void IslandBuffer::clip(int &x, int &y)
+    {
+        if (x < 0)
+            x = 0;
+        else if (x > 319)
+            x = 319;
+
+        if (y < 0)
+            y = 0;
+        else if (y > 239)
+            y = 239;
+    }
+
     bool IslandBuffer::collide(Ship &ship)
     {
         // Instead of performing a complete pixel perfect collision, I simply
@@ -140,8 +138,9 @@ namespace Game
 
         ship.setCollided(false);
 
-        collide(ship.particleThrust());
-
+        int count = collide(ship.particleThrust());
+        ship.addToScore(count);
+        
         return false;
     }
 
@@ -156,37 +155,54 @@ namespace Game
         return false;
     }
 
-    bool IslandBuffer::collide(ParticleSystem &ps)
+    int IslandBuffer::collide(ParticleSystem &ps)
     {
+        int count = 0;
+
         if (ps.isActive())
         {
             int x = 0;
             int y = 0;
+            int xm1 = 0;
+            int xp1 = 0;
+            int ym1 = 0;
+            int yp1 = 0;
             for (auto &p : ps.getParticles())
             {
                 if (p->isActive())
                 {
                     if (collide(p))
                     {
+                        count++;
                         p->setActive(false);
+
                         // Clear a total of 9 pixels.
                         x = p->posX();
                         y = p->posY();
+                        clip(x, y);
                         buffer[x][y] = 0;
-                        buffer[x - 1][y - 1] = 0;
-                        buffer[x + 1][y + 1] = 0;
-                        buffer[x - 1][y + 1] = 0;
-                        buffer[x + 1][y - 1] = 0;
-                        buffer[x - 1][y] = 0;
-                        buffer[x + 1][y] = 0;
-                        buffer[x][y + 1] = 0;
-                        buffer[x][y - 1] = 0;
+
+                        xm1 = x - 1;
+                        xp1 = x + 1;
+                        ym1 = y - 1;
+                        yp1 = y + 1;
+                        clip(xm1, ym1);
+                        clip(xp1, yp1);
+
+                        buffer[xm1][ym1] = 0;
+                        buffer[xp1][yp1] = 0;
+                        buffer[xm1][yp1] = 0;
+                        buffer[xp1][ym1] = 0;
+                        buffer[xm1][y] = 0;
+                        buffer[xp1][y] = 0;
+                        buffer[x][yp1] = 0;
+                        buffer[x][ym1] = 0;
                     }
                 }
             }
         }
 
-        return false;
+        return count;
     }
 
     bool IslandBuffer::collide(int x, int y)

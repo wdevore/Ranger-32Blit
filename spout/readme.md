@@ -20,6 +20,7 @@ The ship is a simple circle with a stick for the engine. Thrust particles intera
   * **Done** Ship to floor (touches explodes)
   * **Done** Ship to obstacles (touches explodes)
 * **Done** Ship Rotation
+* Score and Altitude info bar
 * Islands
   * Scrolling
   * Value Targets. Starts small and swells and explodes.

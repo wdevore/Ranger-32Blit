@@ -90,7 +90,7 @@ namespace Game
 
         buffer.clear();
 
-        islands.reset(3);
+        islands.init(3);
 
         state = SceneState::OnStage; // Immediate transition onto the stage
     }
@@ -143,7 +143,10 @@ namespace Game
         // -----------------------------------------
         // Scrolling
         if (ship.hitTripWire())
+        {
             islands.update(time, buffer);
+            altitude++;
+        }
 
         // -----------------------------------------
         // Collision
@@ -197,7 +200,10 @@ namespace Game
         screen.pen = Pen(255, 255, 255, 127);
         screen.rectangle(Rect(0, 0, screen.bounds.w, 14));
         screen.pen = Pen(0, 0, 0);
-        screen.text("Alt: 0123  ---  Score: 130", minimal_font, Point(5, 4));
+        sprintf(infoLineBuffer, "%06d", altitude);
+        screen.text("Alt: " + std::string(infoLineBuffer), minimal_font, Point(5, 4));
+        sprintf(infoLineBuffer, "%07d", ship.Score());
+        screen.text(" --- Score: " + std::string(infoLineBuffer), minimal_font, Point(75, 4));
     }
 
     void GameScene::update_dieing(uint32_t time)

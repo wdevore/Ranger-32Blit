@@ -46,6 +46,9 @@ namespace Game
         int32_t markerP = markerPlayAgain;
 
         int32_t altitude = 0;
+        int32_t score = 0;
+        
+        char infoLineBuffer[320];
 
         void update_play(uint32_t time);
         void render_play();

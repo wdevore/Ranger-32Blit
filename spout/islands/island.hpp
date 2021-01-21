@@ -15,12 +15,8 @@ namespace Game
     class IsLand
     {
     private:
-        // int mapIdx = 0;
-
         Pen color = {64, 64, 64};
         bool scrolling = false;
-        int heightCnt;
-        int height;
 
         int distanceToView = 0;
         int xoffset = 50;
