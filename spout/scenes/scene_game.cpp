@@ -59,6 +59,14 @@ namespace Game
         case State::ExitPlay:
             render_dieing();
             break;
+        case State::Reset:
+            render_dieing();
+            ship.reset();
+            playTime = 0;
+            score = 0;
+            altitude = 0;
+            gameState = State::Play;
+            break;
         case State::PlayAgain:
             render_dialogPlayAgain();
             DPAD_LEFTButton.reset();
@@ -175,6 +183,9 @@ namespace Game
             ps.setPosition(ship.posX(), ship.posY() - 1);
             ps.triggerExplosion(activator);
         }
+
+        playTime += float(time) / 1000.0;
+        score = ship.Score();
     }
 
     void GameScene::render_dieing()
@@ -197,13 +208,18 @@ namespace Game
 
     void GameScene::render_info()
     {
-        screen.pen = Pen(255, 255, 255, 127);
+        screen.pen = Pen(64, 64, 64, 127);
         screen.rectangle(Rect(0, 0, screen.bounds.w, 14));
-        screen.pen = Pen(0, 0, 0);
+
+        screen.pen = Pen(255, 255, 255);
         sprintf(infoLineBuffer, "%06d", altitude);
         screen.text("Alt: " + std::string(infoLineBuffer), minimal_font, Point(5, 4));
-        sprintf(infoLineBuffer, "%07d", ship.Score());
-        screen.text(" --- Score: " + std::string(infoLineBuffer), minimal_font, Point(75, 4));
+
+        sprintf(infoLineBuffer, "%05d", int(playTime));
+        screen.text("Time: " + std::string(infoLineBuffer), minimal_font, Point(screen.bounds.w - 200, 4));
+
+        sprintf(infoLineBuffer, "%07d", score);
+        screen.text("Score: " + std::string(infoLineBuffer), minimal_font, Point(screen.bounds.w - 75, 4));
     }
 
     void GameScene::update_dieing(uint32_t time)
@@ -243,9 +259,9 @@ namespace Game
         {
             if (markerP == markerPlayAgain)
             {
-                ship.reset();
-                gameState = State::Play;
-                altitude = 0;
+                gameState = State::Reset;
+
+                // gameState = State::Play;
             }
             else
             {

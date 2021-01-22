@@ -14,6 +14,7 @@ namespace Game
         PlayAgain,
         Scores,
         About,
+        Reset,
         Exit // Exit back to 32Blit menu
     };
 

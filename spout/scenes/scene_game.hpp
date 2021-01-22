@@ -47,6 +47,7 @@ namespace Game
 
         int32_t altitude = 0;
         int32_t score = 0;
+        float playTime = 0.0;
         
         char infoLineBuffer[320];
 
