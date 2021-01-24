@@ -113,10 +113,16 @@ namespace Game
 
         // Update Velocity
         velocity += (direction + force) * ShipDeceleration;
+        
         if (velocity.y > MaxDownwardVelocity)
             velocity.y = MaxDownwardVelocity;
         if (velocity.y < -MaxUpwardVelocity)
             velocity.y = -MaxUpwardVelocity;
+
+        if (velocity.x > MaxHorizontalVelocity)
+            velocity.x = MaxHorizontalVelocity;
+        if (velocity.x < -MaxHorizontalVelocity)
+            velocity.x = -MaxHorizontalVelocity;
 
         // Update position based on velocity
         position += velocity;

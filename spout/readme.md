@@ -21,8 +21,9 @@ The ship is a simple circle with a stick for the engine. Thrust particles intera
   * **Done** Ship to obstacles (touches explodes)
 * **Done** Ship Rotation
 * Score and Altitude info bar
+* Waypoint marker lines every N-pixels
 * Islands
-  * Scrolling
+  * **1st draft** Scrolling
   * Value Targets. Starts small and swells and explodes.
   * (*Optional*) Simple vertical chaser appears at random.
 * Menu system

@@ -41,21 +41,31 @@ namespace Game
         std::unique_ptr<ParticleActivator> activator;
 
         bool updateEnabled = true;
-        int32_t markerPlayAgain = 22;
-        int32_t markerNoWay = 32;
-        int32_t markerP = markerPlayAgain;
+        int32_t markerFirstChoice = 22;
+        int32_t markerSecondChoice = 32;
+        int32_t markerP = markerFirstChoice;
 
         int32_t altitude = 0;
         int32_t score = 0;
         float playTime = 0.0;
-        
+        int lives = 3;
+
+        int scrollCnt =0;
+        int scrollAmt = 75;
+
         char infoLineBuffer[320];
+
+        void update_enterplay(uint32_t time);
+        void render_enterplay();
 
         void update_play(uint32_t time);
         void render_play();
 
         void update_dieing(uint32_t time);
         void render_dieing();
+
+        void update_dialogContinue(uint32_t time);
+        void render_dialogContinue();
 
         void update_dialogPlayAgain(uint32_t time);
         void render_dialogPlayAgain();

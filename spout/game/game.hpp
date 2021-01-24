@@ -11,6 +11,7 @@ namespace Game
         EnterPlay, // Prep game
         Play,      // Playing the game
         ExitPlay,  // Player died
+        Continue,
         PlayAgain,
         Scores,
         About,
