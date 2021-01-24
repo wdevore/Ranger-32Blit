@@ -11,7 +11,7 @@ namespace Game
     const int IslandVerticalDistToViewMin = 50;
     const int IslandVerticalDistToViewMax = 200;
 
-    const int MaxExplosionParticles = 100;
+    const int MaxExplosionParticles = 200;
 
     const int MaxThrustParticles = 150;
     const float MaxUpwardVelocity = 0.2;

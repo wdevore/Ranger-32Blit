@@ -19,7 +19,7 @@ namespace Game
         disposeOnExit = false;
 
         activator = std::make_unique<ActivatorArc>();
-        activator->setMaxLifetime(10);
+        activator->setMaxLifetime(20);
 
         // Set up explosion particles
         for (size_t i = 0; i < MaxExplosionParticles; i++)
@@ -293,6 +293,7 @@ namespace Game
             if (markerP == markerFirstChoice)
             {
                 gameState = State::Play;
+                ship.setAlive();
             }
             else
             {
@@ -367,6 +368,7 @@ namespace Game
                 playTime = 0;
                 score = 0;
                 altitude = 0;
+                lives = 3;
             }
             else
             {

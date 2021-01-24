@@ -51,7 +51,11 @@ namespace Game
         int lives = 3;
 
         int scrollCnt =0;
-        int scrollAmt = 75;
+        int scrollAmt = 60;
+        
+        // Every waypoint a bonus is given = Amt - "Seconds passed".
+        int waypointAmt = 100;
+        int waypointCnt = 0;
 
         char infoLineBuffer[320];
 

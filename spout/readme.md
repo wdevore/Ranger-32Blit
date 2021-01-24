@@ -21,10 +21,12 @@ The ship is a simple circle with a stick for the engine. Thrust particles intera
   * **Done** Ship to obstacles (touches explodes)
 * **Done** Ship Rotation
 * Score and Altitude info bar
-* Waypoint marker lines every N-pixels
+* Waypoint marker lines every N-pixels. A max bonus of 100 if making to waypoint under a specific time range.
 * Islands
   * **1st draft** Scrolling
-  * Value Targets. Starts small and swells and explodes.
+  * Value Targets/Mines. They are like islands in that they are added to the buffer. When collided a bonus is given to the player. The mine then explodes.
+    * Starts small and swells and explodes.
+    * Plain
   * (*Optional*) Simple vertical chaser appears at random.
 * Menu system
   * Animation transitions

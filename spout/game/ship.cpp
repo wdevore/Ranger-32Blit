@@ -113,7 +113,7 @@ namespace Game
 
         // Update Velocity
         velocity += (direction + force) * ShipDeceleration;
-        
+
         if (velocity.y > MaxDownwardVelocity)
             velocity.y = MaxDownwardVelocity;
         if (velocity.y < -MaxUpwardVelocity)
@@ -203,6 +203,11 @@ namespace Game
     bool Ship::isDead()
     {
         return died;
+    }
+
+    void Ship::setAlive()
+    {
+        died = false;
     }
 
     void Ship::debug()

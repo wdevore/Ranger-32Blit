@@ -72,6 +72,7 @@ namespace Game
         ParticleSystem& particleThrust();
         
         bool isDead();
+        void setAlive();
 
         void debug();
     };
