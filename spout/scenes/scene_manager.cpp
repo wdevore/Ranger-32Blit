@@ -26,7 +26,7 @@ namespace Game
             }
             else
             {
-                std::cout << "Atleast one Scene must have been queue" << std::endl;
+                std::cout << "Atleast one Scene must have been queued" << std::endl;
                 return false;
             }
         }
@@ -55,6 +55,8 @@ namespace Game
             if (!nextScene.empty())
             {
                 // std::cout << "Next scene '" << nextScene << "'" << std::endl;
+                // Scenes only run if they are placed on the stack, even if they are
+                // immediately popped.
                 queue(nextScene);
             }
 
@@ -96,6 +98,7 @@ namespace Game
         // std::cout << "SceneManager::queue '" << name << "'" << std::endl;
 
         stack.push(std::move(pool[name]));
+        // The pool still contains slot where the scene used to be (i.e. nullptr) --remove it.
         pool.erase(name);
     }
 
@@ -105,7 +108,7 @@ namespace Game
 
         if (stack.empty())
         {
-            std::cout << "SceneManager::popScene no more scenes" << std::endl;
+            std::cout << "SceneManager::pop no more scenes" << std::endl;
             return false; // Signal no more scenes to run
         }
 

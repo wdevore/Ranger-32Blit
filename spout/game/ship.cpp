@@ -58,7 +58,7 @@ namespace Game
         direction.x = 0.0;
         direction.y = 0.0;
         rotational_velocity = 0.0;
-        score = 0;
+        // score = 0;
 
         ps.reset();
     }

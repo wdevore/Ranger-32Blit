@@ -17,6 +17,8 @@ blit_executable (${PROJECT_NAME}
     game/defines.cpp
     game/ship.hpp
     game/ship.cpp
+    game/mine.hpp
+    game/mine.cpp
     game/parameter.hpp
     game/parameter.cpp
     gui/button.hpp
@@ -42,6 +44,8 @@ blit_executable (${PROJECT_NAME}
     islands/island_buffer.hpp
     islands/island_buffer.cpp
     islands/island_maps.cpp
+    islands/mines.hpp
+    islands/mines.cpp
     scenes/scene_manager.hpp
     scenes/scene_manager.cpp
     scenes/scene.hpp

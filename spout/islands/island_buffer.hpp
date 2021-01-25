@@ -6,6 +6,8 @@
 #include "../particles/particle_node.hpp"
 #include "../particles/particle_system.hpp"
 
+// Note: This buffer holds more than just Islands.
+
 namespace Game
 {
     using namespace blit;
@@ -25,7 +27,8 @@ namespace Game
         //
         //             col  row
         uint8_t buffer[320][240]{};
-        Pen colorSet = {64, 64, 64};
+        Pen islandColor = {64, 64, 64};
+        Pen mineColor = {255, 127, 0};
         Point p;
 
     public:
@@ -33,6 +36,7 @@ namespace Game
 
         void setRow(int y, std::vector<uint8_t> &cols);
         void setPixel(int x, int y);
+        void setPixel(int x, int y, uint8_t v);
         void clearPixel(int x, int y);
 
         void scroll();

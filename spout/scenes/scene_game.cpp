@@ -5,6 +5,7 @@
 #include "../islands/island.hpp"
 #include "../particles/activator_arc.hpp"
 #include "../particles/particle_square.hpp"
+#include "../game/mine.hpp"
 
 namespace Game
 {
@@ -28,6 +29,16 @@ namespace Game
             p->setColor(Pen(255, 255, 255));
             ps.addParticle(std::move(p));
         }
+
+        std::list<std::string> mineMap = {
+            "  ooo",
+            " ooooo",
+            "ooooooo",
+            " ooooo",
+            "  ooo",
+        };
+
+        mines.addMine(std::make_unique<Mine>(mineMap));
     }
 
     void GameScene::update(uint32_t time)
@@ -123,10 +134,18 @@ namespace Game
 
     void GameScene::update_enterplay(uint32_t time)
     {
+        buffer.scroll();
+        buffer.clearLine(0);
+
         // First scroll until a Island has reached the screen
         // Then scroll until Spout_ScrollLine reached.
         islands.update(time, buffer);
+        mines.update(time, buffer);
+
+        buffer.scroll();
+        buffer.clearLine(0);
         islands.update(time, buffer);
+        mines.update(time, buffer);
 
         if (scrollCnt > scrollAmt)
         {
@@ -188,7 +207,12 @@ namespace Game
         // Scrolling
         if (ship.hitTripWire())
         {
+            buffer.scroll();
+            // Clear top line from previous scroll
+            buffer.clearLine(0);
+
             islands.update(time, buffer);
+            mines.update(time, buffer);
             altitude++;
         }
 
@@ -293,7 +317,7 @@ namespace Game
             if (markerP == markerFirstChoice)
             {
                 gameState = State::Play;
-                ship.setAlive();
+                ship.reset();
             }
             else
             {

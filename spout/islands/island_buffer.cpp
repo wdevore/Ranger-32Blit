@@ -30,6 +30,12 @@ namespace Game
         buffer[x][y] = 1;
     }
 
+    void IslandBuffer::setPixel(int x, int y, uint8_t v)
+    {
+        clip(x, y);
+        buffer[x][y] = v;
+    }
+
     void IslandBuffer::clearPixel(int x, int y)
     {
         clip(x, y);
@@ -75,7 +81,9 @@ namespace Game
                 p.x = col;
                 p.y = row;
                 if (buffer[col][row] == 1)
-                    screen.pen = colorSet;
+                    screen.pen = islandColor;
+                else if (buffer[col][row] == 2)
+                    screen.pen = mineColor;
                 else
                     screen.pen = Game::clearColor;
                 screen.pixel(p);
@@ -140,7 +148,7 @@ namespace Game
 
         int count = collide(ship.particleThrust());
         ship.addToScore(count);
-        
+
         return false;
     }
 

@@ -5,6 +5,7 @@
 #include "../gui/button.hpp"
 #include "../islands/island_buffer.hpp"
 #include "../islands/islands.hpp"
+#include "../islands/mines.hpp"
 #include "../game/ship.hpp"
 #include "../particles/particle_system.hpp"
 
@@ -31,12 +32,13 @@ namespace Game
         Vec2 gravity = Vec2{0.0, GravityAcceleration};
 
         IsLands islands;
+        Mines mines;
         IslandBuffer buffer;
 
-        uint32_t explodeDuration = 200; // 2 seconds before dialog shows
+        uint32_t explodeDuration = 2000; // 2 seconds before dialog shows
         uint32_t explodeCnt = 0;
 
-        // The system used to display ship exploding
+        // The particle system used to display ship exploding
         ParticleSystem ps;
         std::unique_ptr<ParticleActivator> activator;
 
@@ -51,7 +53,7 @@ namespace Game
         int lives = 3;
 
         int scrollCnt =0;
-        int scrollAmt = 60;
+        int scrollAmt = 75;
         
         // Every waypoint a bonus is given = Amt - "Seconds passed".
         int waypointAmt = 100;

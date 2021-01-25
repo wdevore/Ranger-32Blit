@@ -11,6 +11,11 @@ namespace Game
     const int IslandVerticalDistToViewMin = 50;
     const int IslandVerticalDistToViewMax = 200;
 
+    const int MineXOffsetMin = -30;
+    const int MineXOffsetMax = 30;
+    const int MineVerticalDistToViewMin = 100;
+    const int MineVerticalDistToViewMax = 400;
+
     const int MaxExplosionParticles = 200;
 
     const int MaxThrustParticles = 150;

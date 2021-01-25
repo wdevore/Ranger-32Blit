@@ -11,9 +11,9 @@ namespace Game
 
     void IsLands::update(uint32_t time, IslandBuffer &buffer)
     {
-        buffer.scroll();
-        // Clear top line from previous scroll
-        buffer.clearLine(0);
+        // buffer.scroll();
+        // // Clear top line from previous scroll
+        // buffer.clearLine(0);
 
         for (auto &island : islands)
         {
