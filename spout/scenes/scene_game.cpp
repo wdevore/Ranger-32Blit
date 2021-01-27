@@ -4,6 +4,7 @@
 #include "../scenes/scene_manager.hpp"
 #include "../islands/island.hpp"
 #include "../particles/activator_arc.hpp"
+#include "../particles/activator_radial.hpp"
 #include "../particles/particle_square.hpp"
 #include "../game/mine.hpp"
 
@@ -19,15 +20,25 @@ namespace Game
         // instead re-pool it.
         disposeOnExit = false;
 
-        activator = std::make_unique<ActivatorArc>();
-        activator->setMaxLifetime(20);
+        thrustActivator = std::make_unique<ActivatorArc>();
+        thrustActivator->setMaxLifetime(20);
+
+        mineExplodeActivator = std::make_unique<ActivatorRadial>();
+        mineExplodeActivator->setMaxLifetime(3);
 
         // Set up explosion particles
         for (size_t i = 0; i < MaxExplosionParticles; i++)
         {
-            auto p = std::make_unique<ParticleSquare>(i);
+            auto p = std::make_unique<ParticleSquare>(1);
             p->setColor(Pen(255, 255, 255));
-            ps.addParticle(std::move(p));
+            explodePS.addParticle(std::move(p));
+        }
+
+        for (size_t i = 0; i < MaxExplosionParticles; i++)
+        {
+            auto p = std::make_unique<ParticleSquare>(2);
+            p->setColor(Pen(127, 64, 0));
+            minePS.addParticle(std::move(p));
         }
 
         std::list<std::string> mineMap = {
@@ -225,13 +236,13 @@ namespace Game
             if (hitFloor)
             {
                 // Focus all the particles upwards
-                activator->setStartAngle(DegreeToRadians * -90);
-                activator->setEndAngle(DegreeToRadians * 90);
+                thrustActivator->setStartAngle(DegreeToRadians * -90);
+                thrustActivator->setEndAngle(DegreeToRadians * 90);
             }
             else
             {
-                activator->setStartAngle(DegreeToRadians * 0);
-                activator->setEndAngle(DegreeToRadians * 359);
+                thrustActivator->setStartAngle(DegreeToRadians * 0);
+                thrustActivator->setEndAngle(DegreeToRadians * 359);
             }
 
             lives--;
@@ -251,8 +262,19 @@ namespace Game
             // trigger the resultant menu inadvertantly. So we artifically release it.
             AButton.reset();
 
-            ps.setPosition(ship.posX(), ship.posY() - 1);
-            ps.triggerExplosion(activator);
+            explodePS.setPosition(ship.posX(), ship.posY() - 1);
+            explodePS.triggerExplosion(thrustActivator);
+        }
+
+        minePS.update(time);
+        buffer.collide(minePS);
+
+        if (ship.hasHitMine() && !minePS.isActive())
+        {
+            // explode mine and increment score
+            ship.addToScore(100);
+            minePS.setPosition(ship.posX(), ship.posY() - 1);
+            minePS.triggerExplosion(mineExplodeActivator);
         }
 
         playTime += float(time) / 1000.0;
@@ -263,6 +285,8 @@ namespace Game
     {
         buffer.blit();
 
+        minePS.render();
+
         ship.render();
 
         render_info();
@@ -270,7 +294,7 @@ namespace Game
 
     void GameScene::update_dieing(uint32_t time)
     {
-        ps.update(time);
+        explodePS.update(time);
 
         // Update counter for explosion.
         if (explodeCnt > explodeDuration)
@@ -280,7 +304,7 @@ namespace Game
             explodeCnt = 0;
         }
 
-        buffer.collide(ps);
+        buffer.collide(explodePS);
 
         explodeCnt += time;
     }
@@ -289,14 +313,14 @@ namespace Game
     {
         buffer.blit();
 
-        ps.render();
+        explodePS.render();
 
         render_info();
     }
 
     void GameScene::update_dialogContinue(uint32_t time)
     {
-        ps.update(time);
+        explodePS.update(time);
 
         DPAD_UpButton.update();
         DPAD_DownButton.update();
@@ -327,14 +351,14 @@ namespace Game
             }
         }
 
-        buffer.collide(ps);
+        buffer.collide(explodePS);
     }
 
     void GameScene::render_dialogContinue()
     {
         buffer.blit();
 
-        ps.render();
+        explodePS.render();
 
         // Center dialog
         int32_t dw = 100;
@@ -366,7 +390,7 @@ namespace Game
 
     void GameScene::update_dialogPlayAgain(uint32_t time)
     {
-        ps.update(time);
+        explodePS.update(time);
 
         DPAD_UpButton.update();
         DPAD_DownButton.update();
@@ -390,7 +414,7 @@ namespace Game
                 buffer.clear();
                 ship.reset();
                 playTime = 0;
-                score = 0;
+                ship.clearScore();
                 altitude = 0;
                 lives = 3;
             }
@@ -402,14 +426,14 @@ namespace Game
             }
         }
 
-        buffer.collide(ps);
+        buffer.collide(explodePS);
     }
 
     void GameScene::render_dialogPlayAgain()
     {
         buffer.blit();
 
-        ps.render();
+        explodePS.render();
 
         // Center dialog
         int32_t dw = 100;

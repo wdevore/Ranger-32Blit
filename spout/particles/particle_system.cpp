@@ -8,10 +8,16 @@ using namespace blit;
 
 namespace Game
 {
-    ParticleSystem::ParticleSystem()
+    ParticleSystem::ParticleSystem(int id)
     {
         active = false;
         autoTrigger = false;
+        this->id = id;
+    }
+
+    int ParticleSystem::Id()
+    {
+        return id;
     }
 
     void ParticleSystem::destroy()

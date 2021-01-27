@@ -15,6 +15,11 @@ namespace Game
         elapsed = 0;
     }
 
+    int ParticleNode::Id()
+    {
+        return id;
+    }
+    
     void ParticleNode::setPosition(float x, float y)
     {
         position.x = x;

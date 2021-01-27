@@ -58,7 +58,6 @@ namespace Game
         direction.x = 0.0;
         direction.y = 0.0;
         rotational_velocity = 0.0;
-        // score = 0;
 
         ps.reset();
     }
@@ -71,6 +70,11 @@ namespace Game
     void Ship::addToScore(int value)
     {
         score += value;
+    }
+    
+    void Ship::clearScore()
+    {
+        score = 0;
     }
 
     void Ship::rotateCW()
@@ -194,15 +198,21 @@ namespace Game
         return position.y;
     }
 
-    void Ship::setCollided(bool collide)
+    void Ship::setCollided(int collide)
     {
         this->collide = collide;
-        died = collide;
+        died = collide == 1;
+        hitMine = collide == 2;
     }
 
     bool Ship::isDead()
     {
         return died;
+    }
+
+    bool Ship::hasHitMine()
+    {
+        return hitMine;
     }
 
     void Ship::setAlive()

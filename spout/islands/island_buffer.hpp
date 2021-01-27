@@ -32,7 +32,7 @@ namespace Game
         Point p;
 
     public:
-        IslandBuffer();
+        IslandBuffer() = default;
 
         void setRow(int y, std::vector<uint8_t> &cols);
         void setPixel(int x, int y);
@@ -45,10 +45,14 @@ namespace Game
         void blit();
 
         void clip(int &x, int &y);
-        bool collide(Ship &ship);
-        bool collide(int x, int y);
+
+        int collide(Ship &ship);
+        int collide(int x, int y);
         int collide(ParticleSystem &ps);
-        bool collide(std::unique_ptr<ParticleNode> &p);
+        int collide(std::unique_ptr<ParticleNode> &p);
+
+    private:
+        void clearSquare(int &count, std::unique_ptr<ParticleNode> &p);
     };
 
 } // namespace Game

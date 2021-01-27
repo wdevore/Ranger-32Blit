@@ -39,8 +39,10 @@ namespace Game
         uint32_t explodeCnt = 0;
 
         // The particle system used to display ship exploding
-        ParticleSystem ps;
-        std::unique_ptr<ParticleActivator> activator;
+        ParticleSystem explodePS{1};
+        ParticleSystem minePS{2};
+        std::unique_ptr<ParticleActivator> thrustActivator;
+        std::unique_ptr<ParticleActivator> mineExplodeActivator;
 
         bool updateEnabled = true;
         int32_t markerFirstChoice = 22;
@@ -52,9 +54,9 @@ namespace Game
         float playTime = 0.0;
         int lives = 3;
 
-        int scrollCnt =0;
+        int scrollCnt = 0;
         int scrollAmt = 75;
-        
+
         // Every waypoint a bonus is given = Amt - "Seconds passed".
         int waypointAmt = 100;
         int waypointCnt = 0;

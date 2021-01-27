@@ -8,10 +8,6 @@ namespace Game
     using namespace blit;
     extern Pen clearColor;
 
-    IslandBuffer::IslandBuffer()
-    {
-    }
-
     void IslandBuffer::setRow(int row, std::vector<uint8_t> &cols)
     {
         int col = 0;
@@ -95,72 +91,75 @@ namespace Game
     {
         if (x < 0)
             x = 0;
-        else if (x > 319)
-            x = 319;
+        else if (x > screen.bounds.w - 1)
+            x = screen.bounds.w - 1;
 
         if (y < 0)
             y = 0;
-        else if (y > 239)
-            y = 239;
+        else if (y > screen.bounds.h - 1)
+            y = screen.bounds.h - 1;
     }
 
-    bool IslandBuffer::collide(Ship &ship)
+    int IslandBuffer::collide(Ship &ship)
     {
         // Instead of performing a complete pixel perfect collision, I simply
         // test the corners of a square and its center point. It looks convincing enough.
 
-        bool collided = collide(ship.posX(), ship.posY());
-        if (collided)
+        int collided = collide(ship.posX(), ship.posY());
+        if (collided > 0)
         {
-            ship.setCollided(true);
+            ship.setCollided(collided);
             return collided;
         }
 
         collided = collide(ship.posX() - 1, ship.posY() + 1);
-        if (collided)
+        if (collided > 0)
         {
-            ship.setCollided(true);
+            ship.setCollided(collided);
             return collided;
         }
 
         collided = collide(ship.posX() - 1, ship.posY() - 1);
-        if (collided)
+        if (collided > 0)
         {
-            ship.setCollided(true);
+            ship.setCollided(collided);
             return collided;
         }
 
         collided = collide(ship.posX() + 1, ship.posY() - 1);
-        if (collided)
+        if (collided > 0)
         {
-            ship.setCollided(true);
+            ship.setCollided(collided);
             return collided;
         }
 
         collided = collide(ship.posX() + 1, ship.posY() + 1);
-        if (collided)
+        if (collided > 0)
         {
-            ship.setCollided(true);
+            ship.setCollided(collided);
             return collided;
         }
 
-        ship.setCollided(false);
+        ship.setCollided(0);
 
         int count = collide(ship.particleThrust());
+
         ship.addToScore(count);
 
-        return false;
+        return 0;
     }
 
-    bool IslandBuffer::collide(std::unique_ptr<ParticleNode> &p)
+    int IslandBuffer::collide(std::unique_ptr<ParticleNode> &p)
     {
-        bool collided = collide(p->posX(), p->posY());
-        p->setCollided(collided);
-        if (collided)
+        int collided = collide(p->posX(), p->posY());
+        p->setCollided(collided > 0);
+
+        if (collided > 0)
         {
             return collided;
         }
-        return false;
+
+        return 0;
     }
 
     int IslandBuffer::collide(ParticleSystem &ps)
@@ -179,32 +178,20 @@ namespace Game
             {
                 if (p->isActive())
                 {
-                    if (collide(p))
+                    // Does the particle collide with something in the buffer
+                    int colidId = collide(p);
+                    if (colidId == 1)
                     {
-                        count++;
-                        p->setActive(false);
-
-                        // Clear a total of 9 pixels.
-                        x = p->posX();
-                        y = p->posY();
-                        clip(x, y);
-                        buffer[x][y] = 0;
-
-                        xm1 = x - 1;
-                        xp1 = x + 1;
-                        ym1 = y - 1;
-                        yp1 = y + 1;
-                        clip(xm1, ym1);
-                        clip(xp1, yp1);
-
-                        buffer[xm1][ym1] = 0;
-                        buffer[xp1][yp1] = 0;
-                        buffer[xm1][yp1] = 0;
-                        buffer[xp1][ym1] = 0;
-                        buffer[xm1][y] = 0;
-                        buffer[xp1][y] = 0;
-                        buffer[x][yp1] = 0;
-                        buffer[x][ym1] = 0;
+                        clearSquare(count, p);
+                    }
+                    else if (colidId == 2)
+                    {
+                        // The particle collided with a mine.
+                        // Was the particle from the mine exploder?
+                        if (ps.Id() == 2)
+                        {
+                            clearSquare(count, p);
+                        }
                     }
                 }
             }
@@ -213,24 +200,45 @@ namespace Game
         return count;
     }
 
-    bool IslandBuffer::collide(int x, int y)
+    void IslandBuffer::clearSquare(int &count, std::unique_ptr<ParticleNode> &p)
+    {
+        count++;
+        p->setActive(false);
+
+        // Clear a total of 9 pixels.
+        int x = p->posX();
+        int y = p->posY();
+
+        clip(x, y);
+        buffer[x][y] = 0;
+
+        int xm1 = x - 1;
+        int xp1 = x + 1;
+        int ym1 = y - 1;
+        int yp1 = y + 1;
+        clip(xm1, ym1);
+        clip(xp1, yp1);
+
+        buffer[xm1][ym1] = 0;
+        buffer[xp1][yp1] = 0;
+        buffer[xm1][yp1] = 0;
+        buffer[xp1][ym1] = 0;
+        buffer[xm1][y] = 0;
+        buffer[xp1][y] = 0;
+        buffer[x][yp1] = 0;
+        buffer[x][ym1] = 0;
+    }
+
+    int IslandBuffer::collide(int x, int y)
     {
         // Clip
-        if (x < 0)
-            x = 0;
-        else if (x > screen.bounds.w - 1)
-            x = screen.bounds.w - 1;
+        clip(x, y);
 
-        if (y < 0)
-            y = 0;
-        else if (y > screen.bounds.h - 1)
-            y = screen.bounds.h - 1;
-
-        if (buffer[x][y] == 1)
+        if (buffer[x][y] > 0)
         {
-            return true;
+            return buffer[x][y];
         }
 
-        return false;
+        return 0;
     }
 } // namespace Game

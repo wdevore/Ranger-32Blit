@@ -23,6 +23,7 @@ namespace Game
         ParticleNode() = default;
         ParticleNode(int id);
 
+        int Id();
         void setPosition(float x, float y);
         float posX();
         float posY();

@@ -39,8 +39,9 @@ namespace Game
 
         int score = 0;
         bool tripped = false;
-        bool collide = false;
+        int collide = 0;
         bool died = false;
+        bool hitMine = false;
         float pY = 0.0;
 
         bool debugF = false;
@@ -67,11 +68,13 @@ namespace Game
 
         int Score();
         void addToScore(int value);
+        void clearScore();
 
-        void setCollided(bool collide);
+        void setCollided(int collide);
         ParticleSystem& particleThrust();
         
         bool isDead();
+        bool hasHitMine();
         void setAlive();
 
         void debug();
