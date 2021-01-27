@@ -5,7 +5,9 @@ Spout is a simple game where you attempt to rocket as *high* as you can in the s
 
 The ship is a simple circle with a stick for the engine. Thrust particles interact with the *walls* and *obstacles*.
 
-[Spout Gif](spout 0.1.1.gif)
+![Spout Gif](spout\ 0.1.1.gif)
+
+
 # Build
 ```
 > make -j8; spout
