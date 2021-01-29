@@ -5,6 +5,8 @@ namespace Game
     class ScoresScene : public Scene
     {
     private:
+        char lineBuf[100];
+
     public:
         ScoresScene(std::string scName);
 

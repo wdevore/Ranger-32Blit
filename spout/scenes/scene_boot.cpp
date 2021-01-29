@@ -13,23 +13,7 @@ namespace Game
 
     void BootScene::update(uint32_t time)
     {
-        switch (state)
-        {
-        case SceneState::OnStage:
-        {
-            if (durationCnt > duration)
-            {
-                durationCnt = 0;
-                state = SceneState::Exit; // Signal scene is done and wants to exit
-            }
-
-            durationCnt += time;
-        }
-        break;
-
-        default:
-            break;
-        }
+        state = SceneState::Exit; // Signal scene is done and wants to exit
     }
 
     void BootScene::render()
@@ -45,6 +29,12 @@ namespace Game
         duration = 100; // 0.5 seconds
         durationCnt = 0;
         state = SceneState::OnStage; // Immediate transition onto the stage
+
+        rand();
+
+        set_screen_mode(ScreenMode::hires);
+
+        std::cout << "Dimesions: " << screen.bounds.w << " x " << screen.bounds.h << std::endl;
     }
 
     void BootScene::exitScene()

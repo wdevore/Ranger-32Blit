@@ -6,6 +6,19 @@
 
 namespace Game
 {
+    struct GameScore
+    {
+        char initials[3];
+        int altitude;
+        int score;
+        int time;
+    };
+
+    struct GameSave
+    {
+        GameScore scores[5];
+    };
+
     const int IslandXOffsetMin = -30;
     const int IslandXOffsetMax = 30;
     const int IslandVerticalDistToViewMin = 50;

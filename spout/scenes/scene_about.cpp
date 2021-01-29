@@ -44,12 +44,14 @@ namespace Game
         screen.rectangle(Rect(0, vp, screen.bounds.w, th * 4));
 
         screen.pen = Pen(255, 127, 0);
-        screen.text("About:", minimal_font, Point(htp - 8, vp + 4));
+        screen.text("About Spout:", minimal_font, Point(htp - 8, vp + 4));
         screen.text("   Ported to 32Blit by William Cleveland.", minimal_font, Point(htp, vp + yoff+4));
         yoff += 12;
         screen.text("   Jan 31 2021", minimal_font, Point(htp, vp + yoff+4));
         yoff += 12;
-        screen.text("   Go as high and a fast as you can.", minimal_font, Point(htp, vp + yoff+4));
+        screen.text("   Go as high and a fast as you can", minimal_font, Point(htp, vp + yoff+4));
+        yoff += 12;
+        screen.text("   and capture Orange mines.", minimal_font, Point(htp, vp + yoff+4));
 
         yoff += 12;
         screen.text("   [A] key = Thrust.", minimal_font, Point(htp, vp + yoff+4));

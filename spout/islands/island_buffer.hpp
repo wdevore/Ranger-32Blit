@@ -52,7 +52,7 @@ namespace Game
         int collide(std::unique_ptr<ParticleNode> &p);
 
     private:
-        void clearSquare(int &count, std::unique_ptr<ParticleNode> &p);
+        void clearSquare(int &count, std::unique_ptr<ParticleNode> &p, int id);
     };
 
 } // namespace Game

@@ -2,6 +2,7 @@
 #include <list>
 
 #include "engine/api_private.hpp"
+
 #include "spout.hpp"
 #include "game/game.hpp"
 
@@ -39,13 +40,6 @@ namespace Game
 // -----------------------------------------------------------------
 void init()
 {
-    //drand48(); // Nudge the RNG
-    rand();
-
-    set_screen_mode(ScreenMode::hires);
-
-    std::cout << "Dimesions: " << screen.bounds.w << " x " << screen.bounds.h << std::endl;
-
     using namespace Game;
 
     sceneMan.init();
@@ -87,6 +81,11 @@ void update(uint32_t time)
         exit(0);
     }
 
+    pTime = time;
+
+    // ###################################################
+    // Desktop debug
+    // ###################################################
     MenuButton.update();
 
     if (MenuButton.pressed())
@@ -98,8 +97,6 @@ void update(uint32_t time)
         exit(0);
 #endif
     }
-
-    pTime = time;
 }
 
 // -----------------------------------------------------------------
@@ -118,8 +115,9 @@ void render(uint32_t time)
 
     uint32_t ms_end = now();
 
-    // ******************************************************
+    // ###################################################
     // Debug visuals. Remove in release mode.
+    // ###################################################
     // screen.pen = Pen(255, 127, 100);
     // screen.line(Vec2(0, Spout_ScrollLine), Vec2(screen.bounds.w, Spout_ScrollLine));
 

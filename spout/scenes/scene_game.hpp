@@ -61,7 +61,7 @@ namespace Game
         int waypointAmt = 100;
         int waypointCnt = 0;
 
-        char infoLineBuffer[320];
+        char infoLineBuffer[100];
 
         void update_enterplay(uint32_t time);
         void render_enterplay();

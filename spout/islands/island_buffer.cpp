@@ -180,9 +180,10 @@ namespace Game
                 {
                     // Does the particle collide with something in the buffer
                     int colidId = collide(p);
+
                     if (colidId == 1)
                     {
-                        clearSquare(count, p);
+                        clearSquare(count, p, 1);
                     }
                     else if (colidId == 2)
                     {
@@ -190,7 +191,7 @@ namespace Game
                         // Was the particle from the mine exploder?
                         if (ps.Id() == 2)
                         {
-                            clearSquare(count, p);
+                            clearSquare(count, p, 2);
                         }
                     }
                 }
@@ -200,7 +201,7 @@ namespace Game
         return count;
     }
 
-    void IslandBuffer::clearSquare(int &count, std::unique_ptr<ParticleNode> &p)
+    void IslandBuffer::clearSquare(int &count, std::unique_ptr<ParticleNode> &p, int id)
     {
         count++;
         p->setActive(false);
@@ -210,7 +211,8 @@ namespace Game
         int y = p->posY();
 
         clip(x, y);
-        buffer[x][y] = 0;
+        if (buffer[x][y] == id)
+            buffer[x][y] = 0;
 
         int xm1 = x - 1;
         int xp1 = x + 1;
@@ -219,14 +221,22 @@ namespace Game
         clip(xm1, ym1);
         clip(xp1, yp1);
 
-        buffer[xm1][ym1] = 0;
-        buffer[xp1][yp1] = 0;
-        buffer[xm1][yp1] = 0;
-        buffer[xp1][ym1] = 0;
-        buffer[xm1][y] = 0;
-        buffer[xp1][y] = 0;
-        buffer[x][yp1] = 0;
-        buffer[x][ym1] = 0;
+        if (buffer[xm1][ym1] == id)
+            buffer[xm1][ym1] = 0;
+        if (buffer[xp1][yp1] == id)
+            buffer[xp1][yp1] = 0;
+        if (buffer[xm1][yp1] == id)
+            buffer[xm1][yp1] = 0;
+        if (buffer[xp1][ym1] == id)
+            buffer[xp1][ym1] = 0;
+        if (buffer[xm1][y] == id)
+            buffer[xm1][y] = 0;
+        if (buffer[xp1][y] == id)
+            buffer[xp1][y] = 0;
+        if (buffer[x][yp1] == id)
+            buffer[x][yp1] = 0;
+        if (buffer[x][ym1] == id)
+            buffer[x][ym1] = 0;
     }
 
     int IslandBuffer::collide(int x, int y)

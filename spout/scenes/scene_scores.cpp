@@ -2,9 +2,12 @@
 
 #include "32blit.hpp"
 #include "scene_scores.hpp"
+#include "../game/defines.hpp"
 
 namespace Game
 {
+    extern GameSave gameSave;
+
     using namespace blit;
 
     ScoresScene::ScoresScene(std::string name) : Scene{name}
@@ -39,14 +42,43 @@ namespace Game
         int32_t vp = screen.bounds.h / 3;
         int32_t htp = screen.bounds.w / 5;
         int32_t th = 14;
-        
-        screen.rectangle(Rect(0, vp, screen.bounds.w, 14 * 4));
 
-        screen.pen = Pen(255, 127, 0);
+        screen.rectangle(Rect(0, vp, screen.bounds.w, 20 * 4));
+
+        screen.pen = Pen(255, 127, 64);
+
         screen.text("Scores:", minimal_font, Point(htp - 8, vp + 4));
-        screen.text("   WRC: Points 123, Atltitude 99", minimal_font, Point(htp, vp + 12+4));
-        screen.text("   WRC: Points 666, Atltitude 42", minimal_font, Point(htp, vp + 22+4));
-        screen.text("   WRC: Points 333, Atltitude 101", minimal_font, Point(htp, vp + 34+4));
+
+        GameScore gs = gameSave.scores[0];
+        sprintf(lineBuf, "    %c%c%c: Score (%d) Altitude (%d) Time (%d)",
+                gs.initials[0], gs.initials[1], gs.initials[2],
+                gs.score, gs.altitude, gs.time);
+        screen.text(std::string(lineBuf), minimal_font, Point(htp, vp + 12 + 4));
+
+        gs = gameSave.scores[1];
+        sprintf(lineBuf, "    %c%c%c: Score (%d) Altitude (%d) Time (%d)",
+                gs.initials[0], gs.initials[1], gs.initials[2],
+                gs.score, gs.altitude, gs.time);
+        screen.text(std::string(lineBuf), minimal_font, Point(htp, vp + 22 + 4));
+
+        gs = gameSave.scores[2];
+        sprintf(lineBuf, "    %c%c%c: Score (%d) Altitude (%d) Time (%d)",
+                gs.initials[0], gs.initials[1], gs.initials[2],
+                gs.score, gs.altitude, gs.time);
+        screen.text(std::string(lineBuf), minimal_font, Point(htp, vp + 32 + 4));
+
+        gs = gameSave.scores[3];
+        sprintf(lineBuf, "    %c%c%c: Score (%d) Altitude (%d) Time (%d)",
+                gs.initials[0], gs.initials[1], gs.initials[2],
+                gs.score, gs.altitude, gs.time);
+        screen.text(std::string(lineBuf), minimal_font, Point(htp, vp + 42 + 4));
+
+        gs = gameSave.scores[4];
+        sprintf(lineBuf, "    %c%c%c: Score (%d) Altitude (%d) Time (%d)",
+                gs.initials[0], gs.initials[1], gs.initials[2],
+                gs.score, gs.altitude, gs.time);
+        screen.text(std::string(lineBuf), minimal_font, Point(htp, vp + 52 + 4));
+
     }
 
     std::string ScoresScene::nextScene()
