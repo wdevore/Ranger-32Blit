@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 
 #include "scene_game.hpp"
 #include "../scenes/scene_manager.hpp"
@@ -7,10 +8,12 @@
 #include "../particles/activator_radial.hpp"
 #include "../particles/particle_square.hpp"
 #include "../game/mine.hpp"
+#include "../game/score_board.hpp"
 
 namespace Game
 {
     extern float randF();
+    extern ScoreBoard scoreBoard;
 
     using namespace blit;
 
@@ -71,6 +74,9 @@ namespace Game
         case State::PlayAgain:
             update_dialogPlayAgain(time);
             break;
+        case State::Ranking:
+            update_dialogInitials(time);
+            break;
 
         default:
             break;
@@ -92,12 +98,16 @@ namespace Game
             break;
         case State::Continue:
             render_dialogContinue();
-            DPAD_LEFTButton.reset();
-            DPAD_RIGHTButton.reset();
+            DPAD_LeftButton.reset();
+            DPAD_RightButton.reset();
             AButton.reset();
             break;
         case State::PlayAgain:
             render_dialogPlayAgain();
+            AButton.reset();
+            break;
+        case State::Ranking:
+            render_dialogInitials();
             AButton.reset();
             break;
         case State::Reset:
@@ -126,6 +136,7 @@ namespace Game
     {
         menuRequested = false;
         gameState = State::EnterPlay;
+        // gameState = State::Ranking;
         explodeCnt = 0;
         markerP = markerFirstChoice;
         lives = 3;
@@ -185,13 +196,13 @@ namespace Game
 
         // -----------------------------------------
         // Rotate
-        DPAD_LEFTButton.update();
-        DPAD_RIGHTButton.update();
-        if (DPAD_LEFTButton.pressed())
+        DPAD_LeftButton.update();
+        DPAD_RightButton.update();
+        if (DPAD_LeftButton.pressed())
         {
             ship.rotateCCW();
         }
-        else if (DPAD_RIGHTButton.pressed())
+        else if (DPAD_RightButton.pressed())
         {
             ship.rotateCW();
         }
@@ -249,8 +260,21 @@ namespace Game
             if (lives == 0)
             {
                 lives = 0;
-                // Switch to "Play Again" dialog
-                gameState = State::PlayAgain;
+                rank = scoreBoard.rankPlayer(altitude);
+                if (rank == 0)
+                {
+                    // Switch to "Play Again" dialog
+                    gameState = State::PlayAgain;
+                }
+                else
+                {
+                    // Switch to "Rank dialog"
+                    gameState = State::Ranking;
+                    initials[0] = ' ';
+                    initials[1] = ' ';
+                    initials[2] = ' ';
+                }
+
                 AButton.reset();
             }
             else
@@ -370,7 +394,7 @@ namespace Game
         int32_t dx = wc - dw / 2;
         int32_t dy = hc - dh / 2;
 
-        screen.pen = Pen(127, 127, 127, 127);
+        screen.pen = Pen(127, 127, 127, 200);
         screen.rectangle(Rect(dx, dy, dw, dh));
         screen.pen = Pen(255, 255, 255);
         screen.line(Point(dx, dy), Point(dx + dw, dy));
@@ -384,6 +408,109 @@ namespace Game
         screen.text("    Yeah...No!", minimal_font, Point(dx + xo, dy + 32));
         screen.pen = Pen(255, 255, 255);
         screen.text(" ->", minimal_font, Point(dx + xo, dy + markerP));
+
+        render_info();
+    }
+
+    void GameScene::update_dialogInitials(uint32_t time)
+    {
+        explodePS.update(time);
+
+        // Left/Right changes character position
+        // Up/Down changes character
+
+        DPAD_UpButton.update();
+        DPAD_DownButton.update();
+        DPAD_LeftButton.update();
+        DPAD_RightButton.update();
+        AButton.update();
+
+        if (DPAD_UpButton.tapped())
+        {
+            // scroll backwards through the alphabet
+            initialChar[initialIdx]--;
+            if (initialChar[initialIdx] < 0)
+                initialChar[initialIdx] = 26;
+            initials[initialIdx] = alpha[initialChar[initialIdx]];
+        }
+        else if (DPAD_DownButton.tapped())
+        {
+            // scroll forwards through the alphabet
+            initialChar[initialIdx] = (initialChar[initialIdx] + 1) % 27;
+            initials[initialIdx] = alpha[initialChar[initialIdx]];
+        }
+        else if (AButton.tapped())
+        {
+            scoreBoard.setScore(rank, initials, altitude, ship.Score(), playTime);
+            scoreBoard.save();
+            gameState = State::PlayAgain;
+        }
+        else if (DPAD_LeftButton.tapped())
+        {
+            initialPos -= 5;
+            if (initialPos < 0)
+                initialPos = 10;
+            initialIdx -= 1;
+            if (initialIdx < 0)
+                initialIdx = 2;
+        }
+        else if (DPAD_RightButton.tapped())
+        {
+            initialPos += 5;
+            if (initialPos > 10)
+                initialPos = 0;
+            initialIdx = (initialIdx + 1) % 3;
+        }
+
+        if (blinkCnt > blinkRate)
+        {
+            cursorVisble = !cursorVisble;
+            blinkCnt = 0;
+        }
+        blinkCnt += time;
+    }
+
+    void GameScene::render_dialogInitials()
+    {
+        buffer.blit();
+
+        explodePS.render();
+
+        // Center dialog
+        int32_t dw = 200;
+        int32_t dh = 75;
+        int32_t xo = 20;
+        int32_t wc = screen.bounds.w / 2;
+        int32_t hc = screen.bounds.h / 2;
+
+        int32_t dx = wc - dw / 2;
+        int32_t dy = hc - dh / 2;
+
+        screen.pen = Pen(127, 127, 127, 200);
+        screen.rectangle(Rect(dx, dy, dw, dh));
+
+        screen.pen = Pen(255, 255, 255);
+        screen.text("Enter 3 Letters", minimal_font, Point(dx + xo - 5, dy + 10));
+
+        screen.pen = Pen(0, 0, 0);
+        std::stringstream ss;
+        ss << initials[0] << initials[1] << initials[2];
+        xo += 50;
+        int yo = 10;
+        screen.text(ss.str(), minimal_font, Point(dx + xo, dy + yo + 17));
+
+        if (cursorVisble)
+        {
+            screen.pen = Pen(255, 127, 127);
+            screen.line(Point(dx + xo + initialPos, dy + yo + 24), Point(dx + xo + initialPos + 3, dy + yo + 24));
+            screen.line(Point(dx + xo + initialPos, dy + yo + 25), Point(dx + xo + initialPos + 3, dy + yo + 25));
+        }
+
+        xo -= 45;
+        screen.pen = Pen(255, 255, 255);
+        screen.text("Up/Down changes letter", minimal_font, Point(dx + xo - 10, dy + 42));
+        screen.text("Left/Right changes position", minimal_font, Point(dx + xo - 10, dy + 50));
+        screen.text("A button means done", minimal_font, Point(dx + xo - 10, dy + 58));
 
         render_info();
     }

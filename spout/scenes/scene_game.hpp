@@ -20,8 +20,8 @@ namespace Game
         Game::Button menuButton = Game::Button(blit::Button::HOME);             // "2" on keyboard
         Game::Button AButton = Game::Button(blit::Button::A);                   // "Z" on keyboard
         Game::Button YButton = Game::Button(blit::Button::Y);                   // "V" on keyboard
-        Game::Button DPAD_LEFTButton = Game::Button(blit::Button::DPAD_LEFT);   // "<-" or "A" on keyboard.
-        Game::Button DPAD_RIGHTButton = Game::Button(blit::Button::DPAD_RIGHT); // "->" or "D" on keyboard.
+        Game::Button DPAD_LeftButton = Game::Button(blit::Button::DPAD_LEFT);   // "<-" or "A" on keyboard.
+        Game::Button DPAD_RightButton = Game::Button(blit::Button::DPAD_RIGHT); // "->" or "D" on keyboard.
         Game::Button DPAD_UpButton = Game::Button(blit::Button::DPAD_UP);       // "W" on keyboard.
         Game::Button DPAD_DownButton = Game::Button(blit::Button::DPAD_DOWN);   // "S" on keyboard.
 
@@ -53,6 +53,18 @@ namespace Game
         int32_t score = 0;
         float playTime = 0.0;
         int lives = 3;
+        int rank = 0;
+        
+        char alpha[27] = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', ' '};
+        // int initialChar = 0;
+        int initialChar[3] = {0, 0, 0};
+        int initialIdx = 0;
+        bool cursorVisble = true;
+        int blinkCnt = 0;
+        int blinkRate = 250;
+
+        char initials[3] = {' ', ' ', ' '};
+        int initialPos = 0;
 
         int scrollCnt = 0;
         int scrollAmt = 75;
@@ -74,6 +86,9 @@ namespace Game
 
         void update_dialogContinue(uint32_t time);
         void render_dialogContinue();
+
+        void update_dialogInitials(uint32_t time);
+        void render_dialogInitials();
 
         void update_dialogPlayAgain(uint32_t time);
         void render_dialogPlayAgain();

@@ -21,6 +21,8 @@ blit_executable (${PROJECT_NAME}
     game/mine.cpp
     game/parameter.hpp
     game/parameter.cpp
+    game/score_board.hpp
+    game/score_board.cpp
     gui/button.hpp
     gui/button.cpp
     particles/particle_node.hpp

@@ -14,34 +14,35 @@ The ship is a simple circle with a stick for the engine. Thrust particles intera
 ```
 
 # Tasks
-* **Done** Draw ship (solid circle) and engine (line) points in opposite direction of movement.
-* **Done** Fly ship around using a velocity vector.
-* **Done** Gravity pulls ship to floor.
-* **Done** Particle system
-* **Done** Collisions. Upon death show dialog to "Play again" or "Not".
-  * **Done** Particles to walls (bounces off)
-  * **Done** Ship to floor (touches explodes)
-  * **Done** Ship to obstacles (touches explodes)
-* **Done** Ship Rotation
-* Score and Altitude info bar
-* Waypoint marker lines every N-pixels. A max bonus of 100 if making to waypoint under a specific time range.
-* Islands
-  * **1st draft** Scrolling
-  * Value Targets/Mines. They are like islands in that they are added to the buffer. When collided a bonus is given to the player. The mine then explodes.
-    * Starts small and swells and explodes.
-    * Plain
-  * (*Optional*) Simple vertical chaser appears at random.
-* Menu system
-  * Animation transitions
-* Scenes
-  * **Done** Boot
-  * **Done** Splash
-  * **Done** Exit
-  * **In progress** Menu
-  * Game scene
-    * Start game. Initial islands scroll into view.
-  * Score board scene
-  * **Done** About scene
+- **Done** Draw ship (solid circle) and engine (line) points in opposite direction of movement.
+- **Done** Fly ship around using a velocity vector.
+- **Done** Gravity pulls ship to floor.
+- **Done** Particle system
+- **Done** Collisions. Upon death show dialog to "Play again" or "Not".
+  - **Done** Particles to walls (bounces off)
+  - **Done** Ship to floor (touches explodes)
+  - **Done** Ship to obstacles (touches explodes)
+- **Done** Ship Rotation
+- **Done** Score and Altitude info bar
+- Waypoint marker lines every N-pixels. A max bonus of 100 if making to waypoint under a specific time range.
+- Islands
+  - **Done** Scrolling
+  - Value Targets/Mines. They are like islands in that they are added to the buffer. When collided a bonus is given to the player. The mine then explodes.
+    - Starts small and swells and explodes.
+    - **Done** Plain
+  - (*Optional*) Simple vertical chaser appears at random.
+- Menu system
+  - Animation transitions
+  - High score entry menu
+- Scenes
+  - **Done** Boot
+  - **Done** Splash
+  - **Done** Exit
+  - **In progress** Menu
+  - Game scene
+    - **Done** Start game. Initial islands scroll into view.
+  - **Done** Score board scene
+  - **Done** About scene
 
 ## Notes
 When the game round first starts about a third of the display is pre-scrolled into view.

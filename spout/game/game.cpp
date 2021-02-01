@@ -4,11 +4,12 @@
 
 #include "../scenes/scene_manager.hpp"
 #include "defines.hpp"
+#include "score_board.hpp"
 
 namespace Game
 {
     SceneManager sceneMan;
 
-    GameSave gameSave;
+    ScoreBoard scoreBoard;
 
 } // namespace Game
