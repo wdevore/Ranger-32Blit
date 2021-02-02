@@ -49,8 +49,8 @@ namespace Game
         int32_t markerSecondChoice = 32;
         int32_t markerP = markerFirstChoice;
 
-        int32_t altitude = 0;
-        int32_t score = 0;
+        int altitude = 0;
+        int score = 0;
         float playTime = 0.0;
         int lives = 3;
         int rank = 0;

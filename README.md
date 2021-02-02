@@ -3,13 +3,15 @@
 # Building
 If you want to build a version for the device then specify a toolchain, which in this case is **32blit.toolchain**, make sure you remove any cached build files first. See cleaning section.
 
+The paths given below are *relative*. In addition, the 32blit source may be different, for example "*32blit-beta*" or "*32blit-beta-0.1.9*"
+
 ```
-> cmake . -D32BLIT_PATH="../../32blit-beta" -DCMAKE_TOOLCHAIN_FILE="../../32blit-beta/32blit.toolchain"
+> cmake . -D32BLIT_PATH="../../32blit-beta-0.1.9" -DCMAKE_TOOLCHAIN_FILE="../../32blit-beta-0.1.9/32blit.toolchain"
 ```
 
 If you want to build a desktop version just leave off the toolchain. This will configure a **make** build system so you can compile the code.
 ```
-> cmake . -D32BLIT_PATH="../../32blit-beta"
+> cmake . -D32BLIT_PATH="../../32blit-beta-0.1.9"
 ```
 Now you can run make to compile.
 
