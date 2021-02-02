@@ -49,8 +49,9 @@ namespace Game
 
     std::string SplashScene::nextScene()
     {
-        // return "GameScene";
         return "MenuScene";
+        // -- DEBUG
+        // return "GameScene";
     }
 
     void SplashScene::enterScene()

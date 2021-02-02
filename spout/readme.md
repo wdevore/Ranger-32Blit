@@ -27,13 +27,13 @@ The ship is a simple circle with a stick for the engine. Thrust particles intera
 - Waypoint marker lines every N-pixels. A max bonus of 100 if making to waypoint under a specific time range.
 - Islands
   - **Done** Scrolling
-  - Value Targets/Mines. They are like islands in that they are added to the buffer. When collided a bonus is given to the player. The mine then explodes.
+  - **Done** Value Targets/Mines. They are like islands in that they are added to the buffer. When collided a bonus is given to the player. The mine then explodes.
     - Starts small and swells and explodes.
     - **Done** Plain
   - (*Optional*) Simple vertical chaser appears at random.
 - Menu system
   - Animation transitions
-  - High score entry menu
+  - **Done** High score entry menu
 - Scenes
   - **Done** Boot
   - **Done** Splash
@@ -95,7 +95,7 @@ Two random points are generated on the current line. The end points are driven b
 
 The fractal algorithm uses the subdivision method.
 
-## Algorithm 3 (implemented)
+## Algorithm 3
 A render-time value is randomly generated. This value is how many rows must pass before rendering of the shape begins. It basically represents a delay before the shape start appearing on the screen.
 
 A bounding box is generated. The box represents the height of the shape and the min/max end points. As the shape is generated the bbox controls the extents. First a horizontal center point is generated, then a height and width.
@@ -106,23 +106,8 @@ Most of the time the Line changes shape and position slowly, but occasionally it
 
 Each line has a width and center position on the current row. At the beginning and ending of the bbox the line shortens 50% of the time.
 
+## Algorithm 4
+A island is scrolled into view once it distance value is reached. Very simple an easy. The islands are pre-built as a ```list<string>```.
+
 ### Line Parameters:
---How long a parameter remains at its current value.
-
-Rate, Duration, Gap, Range
-
-* ShiftRate: How fast the line shifts Left or Right
-* ShiftDuration: How long the line is allowed to shift. -1 = No shift
-* ShiftGap: How long between and changes
-* ShiftRange: How far, in either direction, shifting can go. Reletive to center.
-* LeftPointRate: How fast the end point shifts
-* LeftPointDuration: How long the point is allowed to shift.
-* LeftGap: How long between and changes
-* LeftRange: How far, in either direction = Min/Max
-* RightPointRate: How fast the end point shifts
-* RightPointDuration: How long the point is allowed to shift.
-* RightGap: How long between and changes
-* RightRange: How far, in either direction
-
-The end points shift rarely. The line shifts a bit more often. The Gap between shifts is moderate.
-
+-- Note used at this time.

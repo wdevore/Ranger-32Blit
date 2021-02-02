@@ -135,8 +135,11 @@ namespace Game
     void GameScene::enterScene()
     {
         menuRequested = false;
+        
         gameState = State::EnterPlay;
+        // -- DEBUG
         // gameState = State::Ranking;
+
         explodeCnt = 0;
         markerP = markerFirstChoice;
         lives = 3;
@@ -442,6 +445,8 @@ namespace Game
         else if (AButton.tapped())
         {
             scoreBoard.setScore(rank, initials, altitude, ship.Score(), playTime);
+            std::cout << "GameScene: Saving scores" << std::endl;
+
             scoreBoard.save();
             gameState = State::PlayAgain;
         }
