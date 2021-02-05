@@ -36,7 +36,7 @@ namespace Game
     const float MaxDownwardVelocity = 0.3;
     const float MaxHorizontalVelocity = 0.6;
     const float GravityAcceleration = 0.00055;
-    const float RotationalRate = 1.5; // How fast the ship rotates
+    const float RotationalRate = 2.5; // How fast the ship rotates
 
     const float Pi = 3.1415926535897932384626433;
     const float DegreeToRadians = Pi / 180.0;
