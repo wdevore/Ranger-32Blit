@@ -11,7 +11,9 @@ endif()
 include (${32BLIT_PATH}/32blit.cmake)
 
 blit_executable (${PROJECT_NAME}
+    spout.hpp
     spout.cpp
+    game/game.hpp
     game/game.cpp
     game/defines.hpp
     game/defines.cpp
