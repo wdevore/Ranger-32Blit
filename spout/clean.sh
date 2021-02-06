@@ -1,4 +1,5 @@
 rm -rf 32blit
+rm -rf 32blit-sdl
 rm -rf CMakeFiles
 rm cmake_install.cmake
 rm CMakeCache.txt
