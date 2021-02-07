@@ -1,0 +1,8 @@
+title: TriangleRaster
+description: Demo of rastering a triangle
+author: Will Cleveland
+splash:
+  file: tr.png
+icon:
+  file: tr-icon.png
+version: v0.0.1

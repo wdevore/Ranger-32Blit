@@ -1,0 +1,14 @@
+32blit
+32blit-sdl
+CMakeFiles
+_metadata.cpp
+cmake_install.cmake
+CMakeCache.txt
+Makefile
+metadata.cmake
+spout
+spout.elf
+spout.hex
+spout.bin
+spout.blit
+spout.map
