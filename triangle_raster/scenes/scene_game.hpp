@@ -3,6 +3,7 @@
 #include "../game/defines.hpp"
 #include "scene.hpp"
 #include "../gui/button.hpp"
+#include "../geometry/triangle.hpp"
 
 namespace Game
 {
@@ -35,6 +36,8 @@ namespace Game
         float c = 0.0;
         float cdir = 1.0;
 
+        Geometry::Triangle greenTri = {50, 50, 100, 100, 75, 0};
+
         void fillFlatSideTriangleInt(float x1, float y1, float x2, float y2, float x3, float y3);
 
         void fillBottomFlatTriangle(float x1, float y1, float x2, float y2, float x3, float y3);
@@ -53,6 +56,8 @@ namespace Game
 
         void drawTriangle(float x1, float y1, float x2, float y2, float x3, float y3);
         void drawTriangleInt(float x1, float y1, float x2, float y2, float x3, float y3);
+
+        void drawTriangle();
     };
 
 } // namespace Game

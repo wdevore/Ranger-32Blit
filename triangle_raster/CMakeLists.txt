@@ -19,6 +19,10 @@ blit_executable (${PROJECT_NAME}
     game/defines.cpp
     gui/button.hpp
     gui/button.cpp
+    geometry/vertex.hpp
+    geometry/vertex.cpp
+    geometry/triangle.hpp
+    geometry/triangle.cpp
     scenes/scene_manager.hpp
     scenes/scene_manager.cpp
     scenes/scene.hpp

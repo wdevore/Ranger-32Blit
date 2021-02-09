@@ -16,7 +16,7 @@ using namespace blit;
 
 namespace Game
 {
-    Pen clearColor = {200, 200, 200};
+    Pen clearColor = {100, 100, 100};
 
     Game::Button MenuButton(blit::Button::MENU); // "2" on keyboard
     // Button::X = "C" key

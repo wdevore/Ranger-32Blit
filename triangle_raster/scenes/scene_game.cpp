@@ -52,7 +52,6 @@ namespace Game
 
     void GameScene::render()
     {
-        screen.pen = lineColor3;
         float xc = screen.bounds.w / 2;
         float yc = screen.bounds.h / 2;
 
@@ -61,16 +60,19 @@ namespace Game
         // drawTriangleInt(xc - 25, yc, xc + 25, yc, xc-150, yc - 25);
         // drawTriangle(xc - 25, yc, xc + 25, yc, xc - 100, yc - 25);
 
-        drawTriangleInt(0, screen.bounds.h - 1, screen.bounds.w - 1, screen.bounds.h - 1, 0, 0);
+        // screen.pen = lineColor3;
+        // drawTriangleInt(0, screen.bounds.h - 1, screen.bounds.w - 1, screen.bounds.h - 1, 0, 0);
 
-        screen.pen = lineColor2;
-        drawTriangleInt(screen.bounds.w - 1, screen.bounds.h - 1, screen.bounds.w - 1, 0, 0, 0);
+        // screen.pen = lineColor2;
+        // drawTriangleInt(screen.bounds.w - 1, screen.bounds.h - 1, screen.bounds.w - 1, 0, 0, 0);
 
         screen.pen = lineColor1;
         drawTriangleInt(
             xc - c, yc + c,
             xc + 25, yc + ay,
             xc + bx, yc - 55);
+
+        drawTriangle();
     }
 
     std::string GameScene::nextScene()
@@ -305,11 +307,13 @@ namespace Game
         y1 = int(y1);
         y2 = int(y2);
         y3 = int(y3);
-        // at first sort the three vertices by y-coordinate ascending,
-        // so p1 is the topmost vertice
+        
+        // first sort the three vertices by y-coordinate ascending,
+        // so x1,y1 is the topmost vertice
         sortVerticesAscendingByY(x1, y1, x2, y2, x3, y3);
 
-        // here we know that v1.y <= v2.y <= v3.y
+        // here we know that y1 <= y2 <= y3
+
         // check for trivial case of bottom-flat triangle
         if (y2 == y3)
         {
@@ -324,11 +328,17 @@ namespace Game
         {
             // general case - split the triangle in a topflat and bottom-flat one
             int x = (int)(x1 + (float(y2 - y1) / float(y3 - y1)) * (x3 - x1));
-            int y = y2;
 
-            fillFlatSideTriangleInt(x1, y1, x2, y2, x, y);
-            fillFlatSideTriangleInt(x3, y3, x2, y2, x, y);
+            fillFlatSideTriangleInt(x1, y1, x2, y2, x, y2);
+            fillFlatSideTriangleInt(x3, y3, x2, y2, x, y2);
         }
+    }
+
+    void GameScene::drawTriangle()
+    {
+        screen.pen = {127, 255, 127};
+
+        greenTri.render(screen);
     }
 
 } // namespace Game
